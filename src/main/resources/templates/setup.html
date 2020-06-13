@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Getting Started: Serving Web Content</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </head>
+    <body>
+        <form action="#" th:action="@{/payout}" th:object="${setup}" method="post">
+            <p>amount: <input type="text" th:field="*{amount}" /></p>
+            <p>apiKey: <input type="text" th:field="*{apiKey}" /></p>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+    </body>
+</html>
