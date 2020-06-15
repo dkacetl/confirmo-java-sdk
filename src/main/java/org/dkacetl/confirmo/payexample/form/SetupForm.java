@@ -1,7 +1,7 @@
-package org.dkacetl.confirmopayexample.model;
+package org.dkacetl.confirmo.payexample.form;
 
 
-public class Setup {
+public class SetupForm {
 
     private long amount;
     private String apiKey;

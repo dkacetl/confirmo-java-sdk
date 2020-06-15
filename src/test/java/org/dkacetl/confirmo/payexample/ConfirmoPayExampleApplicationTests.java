@@ -1,4 +1,4 @@
-package org.dkacetl.confirmopayexample;
+package org.dkacetl.confirmo.payexample;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
