@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Confirmo pay example - Invoice Form</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </head>
+    <body>
+        <form action="#" th:action="@{/createInvoice}" th:object="${invoiceForm}" method="post" >
+            <p>amount (CZK): <input type="number" th:field="*{amount}" /></p>
+            <p>reference : <input type="text" th:field="*{reference}" /></p>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+    </body>
+</html>
