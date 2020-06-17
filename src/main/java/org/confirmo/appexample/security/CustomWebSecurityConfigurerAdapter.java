@@ -23,8 +23,9 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest().permitAll();
+        http.httpBasic().and()
+                .authorizeRequests()
+                    .anyRequest().authenticated();
     }
 
     @Bean
