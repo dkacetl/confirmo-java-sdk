@@ -48,8 +48,8 @@ public class InvoiceManager {
         invoiceRequest.setInvoice(new InvoiceAmount(format.format(amount),"CZK","LTC"));
         invoiceRequest.setSettlement(settlement);
         invoiceRequest.setReference(reference);
-        invoiceRequest.setNotifyUrl(confirmoPayExampleProperties.getNotifyUrl());
-        invoiceRequest.setReturnUrl(confirmoPayExampleProperties.getReturnUrl());
+        invoiceRequest.setNotifyUrl(confirmoPayExampleProperties.getNotifyUrl() + "/"+reference);
+        invoiceRequest.setReturnUrl(confirmoPayExampleProperties.getReturnUrl() + "/"+reference);
 
         return invoiceService.post(invoiceRequest);
     }

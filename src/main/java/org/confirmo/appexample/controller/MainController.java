@@ -1,6 +1,7 @@
 package org.confirmo.appexample.controller;
 
 import org.confirmo.appexample.business.InvoiceManager;
+import org.confirmo.appexample.form.ConfirmationData;
 import org.confirmo.appexample.form.InvoiceForm;
 import org.confirmo.client.restapi.InvoiceService;
 import org.confirmo.client.restapi.invoice.Invoice;
@@ -12,8 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Controller
 public class MainController {
@@ -37,8 +44,23 @@ public class MainController {
         return "redirect:"+invoice.getUrl();
     }
 
-    @GetMapping("/orderRecieved")
-    public String post(HttpRequest httpRequest) {
-        return "setup";
+    @GetMapping("/invoiceNotification")
+    public String getInvoiceNotification(HttpServletRequest httpRequest) {
+        return "invoicePaid";
+    }
+
+    @PostMapping("/invoiceNotification")
+    public String postInvoiceNotification(HttpServletRequest httpRequest) {
+        return "invoicePaid";
+    }
+
+    @GetMapping(value = "/invoiceRecieved/{reference}") // THIS IS IT
+    public String getInvoiceRecieved(@PathVariable("reference") String reference,
+                                     @RequestParam("bitcoinpay-status") String bitcoinpayStatus,
+                                     Model model)  {
+        model.addAttribute("reference", reference);
+        model.addAttribute("bitcoinpay-status", bitcoinpayStatus);
+        return "invoicePaid";
     }
 }
+

@@ -7,8 +7,8 @@ public class ConfirmoPayExampleProperties {
 
     private String user;
     private String password;
-    private String notifyUrl;
-    private String returnUrl;// = "https://127.0.0.1:8080/orderRecieved";
+    private String notifyUrl = "http://127.0.0.1:8080/invoiceNotification";
+    private String returnUrl = "http://127.0.0.1:8080/invoiceRecieved";
 
     public String getUser() {
         return user;

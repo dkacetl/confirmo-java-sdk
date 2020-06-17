@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class InvoiceForm {
 
-    private long amount;
+    private long amount = 1;
 
     private String reference = UUID.randomUUID().toString();
 
