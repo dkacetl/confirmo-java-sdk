@@ -1,5 +1,8 @@
 package org.confirmo.client.restapi.invoicerequest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class InvoiceAmount {
 
     private String amount;
