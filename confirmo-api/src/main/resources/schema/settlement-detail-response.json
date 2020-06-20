@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "statusReason": {
+      "type": "string"
+    },
+    "balanceFromPreviousPeriod": {
+      "type": "number"
+    },
+    "balanceToNextPeriod": {
+      "type": "number"
+    },
+    "createdAt": {
+      "type": "number"
+    },
+    "account": {
+      "type": "string"
+    },
+    "invoiceAmountSum": {
+      "type": "string"
+    },
+    "invoiceFeeSum": {
+      "type": "string"
+    },
+    "correctionTransactionSum": {
+      "type": "number"
+    },
+    "osTransactionAmountSum": {
+      "type": "number"
+    },
+    "osTransactionFeeSum": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "fee": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "string"
+    }
+  }
+}

@@ -1,13 +1,12 @@
 package org.confirmo.appexample.business;
 
 import org.confirmo.ConfirmoPayExampleProperties;
-import org.confirmo.client.restapi.ConfirmoApiClientProperties;
 import org.confirmo.client.restapi.InvoiceService;
-import org.confirmo.client.restapi.invoice.Invoice;
-import org.confirmo.client.restapi.invoice.Product;
-import org.confirmo.client.restapi.invoice.Settlement;
-import org.confirmo.client.restapi.invoicerequest.InvoiceAmount;
-import org.confirmo.client.restapi.invoicerequest.InvoiceRequest;
+import org.confirmo.client.restapi.schema.CreateNewInvoiceRequest;
+import org.confirmo.client.restapi.schema.CreateNewInvoiceResponse;
+import org.confirmo.client.restapi.schema.Invoice;
+import org.confirmo.client.restapi.schema.Product;
+import org.confirmo.client.restapi.schema.Settlement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,17 +34,23 @@ public class InvoiceManager {
      * @param reference
      * @return
      */
-    public Invoice createInvoice(float amount, String reference) {
-        InvoiceRequest invoiceRequest = new InvoiceRequest();
+    public CreateNewInvoiceResponse createInvoice(float amount, String reference) {
+        CreateNewInvoiceRequest invoiceRequest = new CreateNewInvoiceRequest();
         Product product = new Product();
 
         product.setName("Test");
         product.setDescription("Desc");
 
-        Settlement settlement = new Settlement("CZK");
+        Settlement settlement = new Settlement();
+        settlement.setCurrency("CZK");
+
+        Invoice invoice = new Invoice();
+        invoice.setAmount(format.format(amount));
+        invoice.setCurrencyFrom("CZK");
+        invoice.setCurrencyTo("LTC");
 
         invoiceRequest.setProduct(product);
-        invoiceRequest.setInvoice(new InvoiceAmount(format.format(amount),"CZK","LTC"));
+        invoiceRequest.setInvoice(invoice);
         invoiceRequest.setSettlement(settlement);
         invoiceRequest.setReference(reference);
         invoiceRequest.setNotifyUrl(confirmoPayExampleProperties.getNotifyUrl() + "/"+reference);
