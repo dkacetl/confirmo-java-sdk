@@ -4,6 +4,7 @@ import org.confirmo.ConfirmoPayExampleProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,10 +23,12 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     private ConfirmoPayExampleProperties confirmoPayExampleConfigProperties;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().and()
+    public void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable().httpBasic().and()
                 .authorizeRequests()
-                    .anyRequest().authenticated();
+                    // UNAUTHENTICATED ENDPOINT - WEBHOOK from confirmo
+                    .regexMatchers(HttpMethod.POST, "/invoiceNotification/[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}").permitAll().and()
+                .authorizeRequests().anyRequest().authenticated();
     }
 
     @Bean
