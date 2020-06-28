@@ -1,5 +1,7 @@
-package org.confirmo.client.restapi;
+package org.confirmo.client.restapi.invoice;
 
+import org.confirmo.client.restapi.FilteringParams;
+import org.confirmo.client.restapi.InvoiceService;
 import org.confirmo.client.restapi.schema.CreateNewInvoiceRequest;
 import org.confirmo.client.restapi.schema.CreateNewInvoiceResponse;
 import org.confirmo.client.restapi.schema.InvoiceDetailResponse;

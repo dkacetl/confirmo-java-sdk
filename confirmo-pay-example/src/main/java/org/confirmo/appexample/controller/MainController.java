@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 public class MainController {
 
@@ -28,32 +26,6 @@ public class MainController {
     public String showInvoiceForm(Model model) {
         model.addAttribute("invoiceForm", new InvoiceForm());
         return "invoiceForm";
-    }
-
-    @PostMapping(value = "/createInvoice")
-    public String createInvoice(@ModelAttribute InvoiceForm invoiceForm, Model model) {
-        CreateNewInvoiceResponse invoice = invoiceManager.createInvoice(
-                invoiceForm.getAmount(), invoiceForm.getReference());
-        return "redirect:"+invoice.getUrl();
-    }
-
-    @GetMapping("/invoiceNotification")
-    public String getInvoiceNotification(HttpServletRequest httpRequest) {
-        return "invoicePaid";
-    }
-
-    @PostMapping("/invoiceNotification")
-    public String postInvoiceNotification(HttpServletRequest httpRequest) {
-        return "invoicePaid";
-    }
-
-    @GetMapping(value = "/invoiceRecieved/{reference}") // THIS IS IT
-    public String getInvoiceRecieved(@PathVariable("reference") String reference,
-                                     @RequestParam("bitcoinpay-status") String bitcoinpayStatus,
-                                     Model model)  {
-        model.addAttribute("reference", reference);
-        model.addAttribute("bitcoinpay-status", bitcoinpayStatus);
-        return "invoicePaid";
     }
 }
 

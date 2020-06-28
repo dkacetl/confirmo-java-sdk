@@ -16,7 +16,7 @@ import java.text.Format;
 @Component
 public class InvoiceManager {
 
-    private Format format = new DecimalFormat("#.#");
+    private Format format = new DecimalFormat("#.###");
 
     private InvoiceService invoiceService;
 

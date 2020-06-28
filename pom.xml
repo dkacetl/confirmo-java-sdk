@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>eu.dkacetl</groupId>
-	<artifactId>confirmo-project</artifactId>
+	<artifactId>confirmo-java-sdk</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>confirmo-project</name>
-	<description>Demo project for confirmo</description>
+	<name>Confirmo.net Java SDK</name>
+	<description>Java SDK for integration with bitcoin payment gateway</description>
 	<packaging>pom</packaging>
 
 	<modules>

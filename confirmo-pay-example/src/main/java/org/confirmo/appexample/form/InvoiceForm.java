@@ -5,15 +5,15 @@ import java.util.UUID;
 
 public class InvoiceForm {
 
-    private long amount = 1;
+    private float amount = 1;
 
-    private String reference = UUID.randomUUID().toString();
+    private String reference = UUID.randomUUID().toString(); // TODO: use internal id of payment
 
-    public long getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
