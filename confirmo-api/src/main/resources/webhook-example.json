@@ -1,0 +1,64 @@
+{
+  "id": "inv3e4vx8oke",
+  "address": "LNKKjpmRvKy96vp6oSgqtvpMvpe6tiYWd5",
+  "confirmations": 0,
+  "confirmingSince": null,
+  "createdAt": 1593633399,
+  "customerAmount": {
+    "amount": "0.0010133",
+    "currenocy": "LTC"
+  },
+  "cryptoUri": "litecoin:LNKKjpmRvKy96vp6oSgqtvpMvpe6tiYWd5?amount=0.0010133",
+  "flags": {
+    "refundable": false,
+    "resolvableStatus": null
+  },
+  "merchantAmount": {
+    "amount": "1",
+    "currency": "CZK"
+  },
+  "settlementAmount": {
+    "amount": "0",
+    "currency": "CZK"
+  },
+  "notifyEmail": null,
+  "notifyUrl": "https://lenka-public.pilsfree.net/confirmo/invoiceNotification/8b474cf6-abf7-428f-a9ec-8a5b5a6810d2",
+  "paid": {
+    "amount": "0",
+    "currency": "LTC",
+    "diff": "-0.0010133",
+    "amountUnconfirmed": null
+  },
+  "paidSince": null,
+  "expiredSince": null,
+  "errorSince": null,
+  "activeSince": 1593633399,
+  "preparedSince": null,
+  "product": {
+    "name": "Test",
+    "description": "Desc"
+  },
+  "rate": {
+    "currencyFrom": "CZK",
+    "currencyTo": "LTC",
+    "value": "986.87"
+  },
+  "reference": "8b474cf6-abf7-428f-a9ec-8a5b5a6810d2",
+  "refunds": [],
+  "refundLink": null,
+  "requiredConfirmations": 2,
+  "requiredConfirmationsToRefund": null,
+  "returnUrl": "https://lenka-public.pilsfree.net/confirmo/invoiceReceived/8b474cf6-abf7-428f-a9ec-8a5b5a6810d2",
+  "status": "active",
+  "timeoutTime": 1593634299,
+  "cryptoTransactions": [],
+  "unhandledExceptions": false,
+  "url": "https://confirmo.net/public/invoice/inv3e4vx8oke",
+  "settlement": null,
+  "emailInvoiceId": null,
+  "buttonInvoiceId": null,
+  "fee": null,
+  "overUnderPaidAmount": null,
+  "takeInfo": null,
+  "cryptoExternalUrl": null
+}

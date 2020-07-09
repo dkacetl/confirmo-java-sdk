@@ -1,0 +1,7 @@
+<POST http://127.0.0.1:8080/invoiceNotification/8b474cf6-abf7-428f-a9ec-8a5b5a6810d2,
+[host:"127.0.0.1:8080", connection:"close", content-length:"1397",
+accept:"text/plain, text/plain, application/json, application/json,
+application/*+json, application/*+json, */*, */*", content-type:"application/json;charset=UTF-8", bpversion:"3.0",
+user-agent:"Apache-HttpClient/4.5.5 (Java/1.8.0_232)", cookie:"JSESSIONID=CDD3DDEA364972548344954CA701D4C7", accept-encoding:"gzip,deflate"]>
+
+
