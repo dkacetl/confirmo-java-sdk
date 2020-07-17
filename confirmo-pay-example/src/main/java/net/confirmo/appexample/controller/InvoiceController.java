@@ -23,9 +23,6 @@ public class InvoiceController {
     @Autowired
     private InvoiceManager invoiceManager;
 
-    @Autowired
-    private InvoiceService invoiceService;
-
     @PostMapping(value = "/createInvoice")
     public String createInvoice(@ModelAttribute InvoiceForm invoiceForm, Model model) {
         CreateNewInvoiceResponse newInvoiceResponse = invoiceManager.createInvoice(
