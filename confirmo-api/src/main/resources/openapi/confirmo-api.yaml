@@ -10,8 +10,30 @@ servers:
   - url: https://confirmo.net/api/v3/
     description: Production URL
 paths:
+  /invoices/{id}:
+    get:
+      summary: Get invoice by Id
+      operationId: getInvoiceById
+      tags:
+        - invoice
+      parameters:
+        - in: path
+          name: id
+          description: ID of invoice
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Single invoice
+          content:
+            application/json:
+              schema:
+                $ref: './schema/invoices-response.json'
   /invoices:
     post:
+      tags:
+        - invoice
       summary: Create new invoice
       operationId: create-new-invoice
       requestBody:
@@ -38,6 +60,8 @@ paths:
           description: Validation exception
           content: {}
     get:
+      tags:
+        - invoice
       parameters:
         - in: query
           name: limit

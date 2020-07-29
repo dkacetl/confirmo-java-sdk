@@ -1,7 +1,6 @@
 package net.confirmo.client.restapi.schema;
 
-import java.util.Objects;
-import java.util.StringJoiner;
+import net.confirmo.client.restapi.model.*;
 
 public class WebhookRequest {
     String id;                   //": "inv3e4vx8oke",
@@ -9,19 +8,19 @@ public class WebhookRequest {
     Long confirmations;
     Long confirmingSince;
     Long createdAt;             //": 1593633399,
-    CustomerAmount customerAmount;
+    CreateNewInvoiceRequestInvoice customerAmount;
     String cryptoUri;           // "litecoin:LNKKjpmRvKy96vp6oSgqtvpMvpe6tiYWd5?amount=0.0010133",
-    Flags flags;
-    MerchantAmount merchantAmount;
-    SettlementAmount settlementAmount;
+    CreateNewInvoiceResponseFlags flags;
+    CreateNewInvoiceResponseMerchantAmount merchantAmount;
+    CreateNewInvoiceResponseSettlement settlementAmount;
     String notifyEmail;
     String notifyUrl;           //": "https://lenka-public.pilsfree.net/confirmo/invoiceNotification/8b474cf6-abf7-428f-a9ec-8a5b5a6810d2",
-    Paid paid;
-    Product product;
-    Rate rate;
+    CreateNewInvoiceResponsePaid paid;
+    CreateNewInvoiceRequestProduct product;
+    CreateNewInvoiceResponseRate rate;
     String reference;       //": "8b474cf6-abf7-428f-a9ec-8a5b5a6810d2",
     String returnUrl;//": "https://lenka-public.pilsfree.net/confirmo/invoiceReceived/8b474cf6-abf7-428f-a9ec-8a5b5a6810d2",
-    InvoiceDetailResponse.Status status;//"status": "active",
+    CreateNewInvoiceResponse.StatusEnum status;//"status": "active",
     String url;//": "https://confirmo.net/public/invoice/inv3e4vx8oke",
 //    "settlement": null,
 //    "emailInvoiceId": null,
@@ -83,11 +82,11 @@ public class WebhookRequest {
         this.createdAt = createdAt;
     }
 
-    public CustomerAmount getCustomerAmount() {
+    public CreateNewInvoiceRequestInvoice getCustomerAmount() {
         return customerAmount;
     }
 
-    public void setCustomerAmount(CustomerAmount customerAmount) {
+    public void setCustomerAmount(CreateNewInvoiceRequestInvoice customerAmount) {
         this.customerAmount = customerAmount;
     }
 
@@ -99,27 +98,27 @@ public class WebhookRequest {
         this.cryptoUri = cryptoUri;
     }
 
-    public Flags getFlags() {
+    public CreateNewInvoiceResponseFlags getFlags() {
         return flags;
     }
 
-    public void setFlags(Flags flags) {
+    public void setFlags(CreateNewInvoiceResponseFlags flags) {
         this.flags = flags;
     }
 
-    public MerchantAmount getMerchantAmount() {
+    public CreateNewInvoiceResponseMerchantAmount getMerchantAmount() {
         return merchantAmount;
     }
 
-    public void setMerchantAmount(MerchantAmount merchantAmount) {
+    public void setMerchantAmount(CreateNewInvoiceResponseMerchantAmount merchantAmount) {
         this.merchantAmount = merchantAmount;
     }
 
-    public SettlementAmount getSettlementAmount() {
+    public CreateNewInvoiceResponseSettlement getSettlementAmount() {
         return settlementAmount;
     }
 
-    public void setSettlementAmount(SettlementAmount settlementAmount) {
+    public void setSettlementAmount(CreateNewInvoiceResponseSettlement settlementAmount) {
         this.settlementAmount = settlementAmount;
     }
 
@@ -139,27 +138,27 @@ public class WebhookRequest {
         this.notifyUrl = notifyUrl;
     }
 
-    public Paid getPaid() {
+    public CreateNewInvoiceResponsePaid getPaid() {
         return paid;
     }
 
-    public void setPaid(Paid paid) {
+    public void setPaid(CreateNewInvoiceResponsePaid paid) {
         this.paid = paid;
     }
 
-    public Product getProduct() {
+    public CreateNewInvoiceRequestProduct getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(CreateNewInvoiceRequestProduct product) {
         this.product = product;
     }
 
-    public Rate getRate() {
+    public CreateNewInvoiceResponseRate getRate() {
         return rate;
     }
 
-    public void setRate(Rate rate) {
+    public void setRate(CreateNewInvoiceResponseRate rate) {
         this.rate = rate;
     }
 
@@ -179,11 +178,11 @@ public class WebhookRequest {
         this.returnUrl = returnUrl;
     }
 
-    public InvoiceDetailResponse.Status getStatus() {
+    public CreateNewInvoiceResponse.StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(InvoiceDetailResponse.Status status) {
+    public void setStatus(CreateNewInvoiceResponse.StatusEnum status) {
         this.status = status;
     }
 
@@ -196,40 +195,28 @@ public class WebhookRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WebhookRequest that = (WebhookRequest) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
     public String toString() {
-        return new StringJoiner(", ", WebhookRequest.class.getSimpleName() + "[", "]")
-                .add("id='" + id + "'")
-                .add("address='" + address + "'")
-                .add("confirmations=" + confirmations)
-                .add("confirmingSince=" + confirmingSince)
-                .add("createdAt=" + createdAt)
-                .add("customerAmount=" + customerAmount)
-                .add("cryptoUri='" + cryptoUri + "'")
-                .add("flags=" + flags)
-                .add("merchantAmount=" + merchantAmount)
-                .add("settlementAmount=" + settlementAmount)
-                .add("notifyEmail='" + notifyEmail + "'")
-                .add("notifyUrl='" + notifyUrl + "'")
-                .add("paid=" + paid)
-                .add("product=" + product)
-                .add("rate=" + rate)
-                .add("reference='" + reference + "'")
-                .add("returnUrl='" + returnUrl + "'")
-                .add("status=" + status)
-                .add("url='" + url + "'")
-                .toString();
+        final StringBuilder sb = new StringBuilder("WebhookRequest{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", address='").append(address).append('\'');
+        sb.append(", confirmations=").append(confirmations);
+        sb.append(", confirmingSince=").append(confirmingSince);
+        sb.append(", createdAt=").append(createdAt);
+        sb.append(", customerAmount=").append(customerAmount);
+        sb.append(", cryptoUri='").append(cryptoUri).append('\'');
+        sb.append(", flags=").append(flags);
+        sb.append(", merchantAmount=").append(merchantAmount);
+        sb.append(", settlementAmount=").append(settlementAmount);
+        sb.append(", notifyEmail='").append(notifyEmail).append('\'');
+        sb.append(", notifyUrl='").append(notifyUrl).append('\'');
+        sb.append(", paid=").append(paid);
+        sb.append(", product=").append(product);
+        sb.append(", rate=").append(rate);
+        sb.append(", reference='").append(reference).append('\'');
+        sb.append(", returnUrl='").append(returnUrl).append('\'');
+        sb.append(", status=").append(status);
+        sb.append(", url='").append(url).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

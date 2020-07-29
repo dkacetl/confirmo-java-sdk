@@ -18,7 +18,11 @@
       "type": "string"
     },
     "data": {
-      "type": "array"
+      "type": "array",
+      "items": {
+        "$ref": "./invoice-detail-response.json"
+      },
+      "default": []
     }
   }
 }

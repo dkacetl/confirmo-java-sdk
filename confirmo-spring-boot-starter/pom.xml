@@ -33,20 +33,44 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-<!--			<exclusions>-->
-<!--				<exclusion>-->
-<!--					<groupId>org.junit.vintage</groupId>-->
-<!--					<artifactId>junit-vintage-engine</artifactId>-->
-<!--				</exclusion>-->
-<!--			</exclusions>-->
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.jetbrains</groupId>-->
-<!--			<artifactId>annotations</artifactId>-->
-<!--			<version>13.0</version>-->
-<!--			<scope>compile</scope>-->
-<!--		</dependency>-->
+		<!-- https://mvnrepository.com/artifact/com.github.joschi.jackson/jackson-datatype-threetenbp -->
+		<dependency>
+			<groupId>com.github.joschi.jackson</groupId>
+			<artifactId>jackson-datatype-threetenbp</artifactId>
+			<version>2.6.4</version>
+		</dependency>
+
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<generateApiDocumentation>false</generateApiDocumentation>
+							<inputSpec>${project.basedir}/../confirmo-api/src/main/resources/openapi/confirmo-api.yaml</inputSpec>
+							<skipValidateSpec>true</skipValidateSpec>
+							<generatorName>java</generatorName>
+							<apiPackage>net.confirmo.client.restapi.api</apiPackage>
+							<modelPackage>net.confirmo.client.restapi.model</modelPackage>
+							<invokerPackage>net.confirmo.client.restapi.client</invokerPackage>
+							<packageName>net.confirmo.client.restapi</packageName>
+							<generateModels>false</generateModels>
+							<modelNamePrefix></modelNamePrefix>
+							<library>resttemplate</library>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

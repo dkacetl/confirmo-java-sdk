@@ -46,26 +46,8 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.jsonschema2pojo</groupId>
-				<artifactId>jsonschema2pojo-maven-plugin</artifactId>
-				<configuration>
-					<sourceDirectory>${basedir}/src/main/resources/openapi/schema</sourceDirectory>
-					<targetPackage>net.confirmo.client.restapi.schema</targetPackage>
-					<includeAdditionalProperties>true</includeAdditionalProperties>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>4.3.1</version>
 				<executions>
 					<execution>
 						<goals>
@@ -82,17 +64,10 @@
 							<packageName>net.confirmo.client.restapi</packageName>
 							<modelNamePrefix></modelNamePrefix>
 							<library>native</library>
-							<generateApiTests>false</generateApiTests>
-							<generateApis>false</generateApis>
-							<generateModelTests>false</generateModelTests>
-							<configOptions>
-								<sourceFolder>src/gen/java/main</sourceFolder>
-							</configOptions>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 </project>
