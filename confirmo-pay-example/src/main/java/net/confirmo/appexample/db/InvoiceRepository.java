@@ -1,6 +1,8 @@
 package net.confirmo.appexample.db;
 
-// TODO
-public interface InvoiceRepository {
+import net.confirmo.appexample.model.InvoiceEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface InvoiceRepository extends JpaRepository<InvoiceEntity, String> {
 
 }

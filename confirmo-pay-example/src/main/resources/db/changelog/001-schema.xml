@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+	   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+	   http://www.liquibase.org/xml/ns/dbchangelog
+	   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="dkacetl"  id="createTable-invoice">
+        <createTable tableName="invoice">
+            <column  name="id"                  type="varchar(255)"/>
+            <column  name="confirmo_invoice_id" type="varchar(255)"/>
+            <column  name="amount"              type="varchar(255)"/>
+            <column  name="currency"            type="varchar(255)"/>
+            <column  name="amount_from"         type="varchar(255)"/>
+            <column  name="tenant_id"           type="varchar(255)"/>
+            <column  name="status"              type="varchar(255)"/>
+            <column  name="created"             type="varchar(255)"/>
+            <column  name="updated"             type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+
+</databaseChangeLog>

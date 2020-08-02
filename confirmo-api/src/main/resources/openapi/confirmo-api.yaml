@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: Confirmo.net REST API
+  description: 'Confirmo.net open api specification'
+  version: 3.0.0
+externalDocs:
+  description: Full documentation
+  url: https://confirmonetapi.docs.apiary.io
+servers:
+  - url: https://confirmo.net/api/v3/
+    description: Production URL
+paths:
+  /invoices/{id}:
+    get:
+      summary: Get invoice by Id
+      operationId: getInvoiceById
+      tags:
+        - invoice
+      parameters:
+        - in: path
+          name: id
+          description: ID of invoice
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Single invoice
+          content:
+            application/json:
+              schema:
+                $ref: './schema/invoices-response.json'
+  /invoices:
+    post:
+      tags:
+        - invoice
+      summary: Create new invoice
+      operationId: createNewInvoice
+      requestBody:
+        description: Create new invoice
+        content:
+          application/json:
+            schema:
+              $ref: './schema/create-new-invoice-request.json'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: './schema/create-new-invoice-response.json'
+        400:
+          description: Invalid request
+          content: {}
+        404:
+          description: Invoice not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+    get:
+      tags:
+        - invoice
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: number
+        - in: query
+          name: offset
+          schema:
+            type: number
+        - in: query
+          name: order
+          schema:
+            type: string
+        - in: query
+          name: createdAtFrom
+          schema:
+            type: number
+        - in: query
+          name: createdAtTo
+          schema:
+            type: number
+        - in: query
+          name: status
+          schema:
+            type: string
+      summary: invoices
+      operationId: get-invoices-list
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: './schema/invoices-response.json'
+        400:
+          description: Invalid request
+          content: {}
+        404:
+          description: Invoice not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []

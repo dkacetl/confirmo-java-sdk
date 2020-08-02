@@ -1,19 +1,15 @@
 package net.confirmo.appexample.controller;
 
+import net.confirmo.api.model.CreateNewInvoiceResponse;
+import net.confirmo.api.query.BitcoinPayStatus;
 import net.confirmo.appexample.business.InvoiceManager;
 import net.confirmo.appexample.form.InvoiceForm;
-import net.confirmo.client.restapi.InvoiceService;
-import net.confirmo.client.restapi.schema.CreateNewInvoiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class InvoiceController {
@@ -22,9 +18,6 @@ public class InvoiceController {
 
     @Autowired
     private InvoiceManager invoiceManager;
-
-    @Autowired
-    private InvoiceService invoiceService;
 
     @PostMapping(value = "/createInvoice")
     public String createInvoice(@ModelAttribute InvoiceForm invoiceForm, Model model) {
@@ -37,7 +30,7 @@ public class InvoiceController {
 
     @GetMapping(value = "/invoiceReceived/{reference}")
     public String getInvoiceReceived(@PathVariable("reference") String reference,
-                                     @RequestParam("bitcoinpay-status") String bitcoinpayStatus,
+                                     @RequestParam("bitcoinpay-status") BitcoinPayStatus bitcoinpayStatus,
                                      Model model)  {
         LOGGER.info("invoiceReceived: {}, {}.",reference, bitcoinpayStatus);
         model.addAttribute("reference", reference);

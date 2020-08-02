@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "totalCount": {
+      "type": "number"
+    },
+    "offset": {
+      "type": "number"
+    },
+    "limit": {
+      "type": "number"
+    },
+    "order": {
+      "type": "string"
+    },
+    "query": {
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "./invoice-detail-response.json"
+      },
+      "default": []
+    }
+  }
+}

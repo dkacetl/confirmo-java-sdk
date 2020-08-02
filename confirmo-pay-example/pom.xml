@@ -9,13 +9,20 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>eu.dkacetl</groupId>
 	<artifactId>confirmo-pay-example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>confirmo-pay-example</name>
 	<description>Demo for confirmo</description>
 
 	<dependencies>
+		<!-- confirmo -->
+		<dependency>
+			<groupId>eu.dkacetl</groupId>
+			<artifactId>confirmo-spring-boot-starter</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -28,22 +35,33 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- db -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
+
+		<!-- test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>eu.dkacetl</groupId>
-			<artifactId>confirmo-spring-boot-starter</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>
@@ -53,6 +71,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>net.confirmo.appexample.ConfirmoPayExampleApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

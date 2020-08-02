@@ -22,23 +22,63 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.parser.v3</groupId>
+			<artifactId>swagger-parser</artifactId>
+			<version>2.0.19</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.jsonschema2pojo</groupId>
-				<artifactId>jsonschema2pojo-maven-plugin</artifactId>
-				<configuration>
-					<sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>
-					<targetPackage>net.confirmo.client.restapi.schema</targetPackage>
-					<includeAdditionalProperties>true</includeAdditionalProperties>
-				</configuration>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
 				<executions>
 					<execution>
 						<goals>
 							<goal>generate</goal>
 						</goals>
+						<configuration>
+							<generateApiDocumentation>false</generateApiDocumentation>
+							<inputSpec>${project.basedir}/src/main/resources/openapi/confirmo-api.yaml</inputSpec>
+							<skipValidateSpec>true</skipValidateSpec>
+							<generatorName>java</generatorName>
+							<modelPackage>net.confirmo.api.model</modelPackage>
+							<apiPackage>net.confirmo.api.client</apiPackage>
+							<invokerPackage>net.confirmo.api.client.invoker</invokerPackage>
+							<packageName>net.confirmo.api</packageName>
+							<modelNamePrefix></modelNamePrefix>
+							<generateApis>true</generateApis>
+							<library>native</library>
+							<generateModelTests>false</generateModelTests>
+							<generateApiTests>false</generateApiTests>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

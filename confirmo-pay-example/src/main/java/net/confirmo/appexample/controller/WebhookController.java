@@ -2,8 +2,8 @@ package net.confirmo.appexample.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.confirmo.client.restapi.schema.WebhookRequest;
-import net.confirmo.client.restapi.signature.RequestEntityValidator;
+import net.confirmo.api.model.WebhookRequest;
+import net.confirmo.spring.signature.RequestEntityValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
