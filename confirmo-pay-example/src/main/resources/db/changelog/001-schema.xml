@@ -9,16 +9,14 @@
 
     <changeSet author="dkacetl"  id="createTable-invoice">
         <createTable tableName="invoice">
-            <column  name="reference"           type="varchar(255)"/>
+            <column  name="id"                  type="varchar(255)"/>
             <column  name="confirmo_invoice_id" type="varchar(255)"/>
             <column  name="amount"              type="varchar(255)"/>
-            <column  name="currency_from"       type="varchar(255)"/>
+            <column  name="currency"            type="varchar(255)"/>
             <column  name="amount_from"         type="varchar(255)"/>
-            <column  name="currency_to"         type="varchar(255)"/>
-            <column  name="amount_to"           type="varchar(255)"/>
             <column  name="tenant_id"           type="varchar(255)"/>
-            <column  name="bitcoinpay_status"   type="varchar(255)"/>
             <column  name="status"              type="varchar(255)"/>
+            <column  name="created"             type="varchar(255)"/>
             <column  name="updated"             type="varchar(255)"/>
         </createTable>
     </changeSet>

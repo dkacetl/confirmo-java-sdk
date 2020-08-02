@@ -1,27 +1,36 @@
 package net.confirmo.appexample.business;
 
+import net.confirmo.api.model.CreateNewInvoiceRequest;
+import net.confirmo.api.model.CreateNewInvoiceResponse;
+import net.confirmo.api.tools.InvoiceRequestBuilder;
 import net.confirmo.appexample.ConfirmoPayExampleProperties;
-import net.confirmo.client.restapi.model.*;
+import net.confirmo.appexample.db.InvoiceRepository;
+import net.confirmo.appexample.model.InvoiceEntity;
+import net.confirmo.spring.invoice.InvoiceService;
+import net.confirmo.spring.invoice.builder.InvoiceRequestBuilderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.text.DecimalFormat;
-import java.text.Format;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class InvoiceManager {
 
-    private Format format = new DecimalFormat("#.###");
-
-//    private InvoiceService invoiceService;
+    private InvoiceService invoiceService;
 
     private ConfirmoPayExampleProperties confirmoPayExampleProperties;
 
+    private InvoiceRequestBuilderService invoiceRequestBuilderService;
+
+    private InvoiceRepository invoiceRepository;
+
     @Autowired
-    public InvoiceManager(ConfirmoPayExampleProperties confirmoPayExampleProperties) {
-//        this.invoiceService = invoiceService;
+    public InvoiceManager(InvoiceService invoiceService, ConfirmoPayExampleProperties confirmoPayExampleProperties, InvoiceRequestBuilderService invoiceRequestBuilderService, InvoiceRepository invoiceRepository) {
+        this.invoiceService = invoiceService;
         this.confirmoPayExampleProperties = confirmoPayExampleProperties;
+        this.invoiceRequestBuilderService = invoiceRequestBuilderService;
+        this.invoiceRepository = invoiceRepository;
     }
+
 
     /**
      *
@@ -30,27 +39,29 @@ public class InvoiceManager {
      * @return
      */
     public CreateNewInvoiceResponse createInvoice(float amount, String reference) {
-        CreateNewInvoiceRequest invoiceRequest = new CreateNewInvoiceRequest();
-        CreateNewInvoiceRequestProduct product = new CreateNewInvoiceRequestProduct();
 
-        product.setName("Test");
-        product.setDescription("Desc");
+        CreateNewInvoiceRequest invoiceRequest = createBuilder(reference)
+                .product("Confirmo product example","Pleas pay for me, "+reference)
+                .invoiceAmount(amount)
+                .build();
 
-        CreateNewInvoiceRequestSettlement settlement = new CreateNewInvoiceRequestSettlement();
-        settlement.setCurrency("CZK");
+        createRecord(amount, reference);
 
-        CreateNewInvoiceRequestInvoice invoice = new CreateNewInvoiceRequestInvoice();
-        invoice.setAmount(format.format(amount));
-        invoice.setCurrencyFrom("CZK");
-        invoice.setCurrencyTo("LTC");
+        return invoiceService.create(invoiceRequest);
+    }
 
-        invoiceRequest.setProduct(product);
-        invoiceRequest.setInvoice(invoice);
-        invoiceRequest.setSettlement(settlement);
-        invoiceRequest.setReference(reference);
-        invoiceRequest.setNotifyUrl(confirmoPayExampleProperties.getNotifyUrl() + "/"+reference);
-        invoiceRequest.setReturnUrl(confirmoPayExampleProperties.getReturnUrl() + "/"+reference);
+    private void createRecord(float amount, String reference) {
+        InvoiceEntity invoiceEntity = new InvoiceEntity();
+        invoiceEntity.setAmount(amount);
+        invoiceEntity.setId(reference);
+        invoiceEntity.setStatus("creating");
+        invoiceRepository.save(invoiceEntity);
+    }
 
-        return null;//invoiceService.post(invoiceRequest);
+    private InvoiceRequestBuilder createBuilder(String reference) {
+        return invoiceRequestBuilderService.createBuilder()
+                .reference(reference,
+                        confirmoPayExampleProperties.getNotifyUrl() + "/"+reference,
+                        confirmoPayExampleProperties.getReturnUrl() + "/"+reference);
     }
 }

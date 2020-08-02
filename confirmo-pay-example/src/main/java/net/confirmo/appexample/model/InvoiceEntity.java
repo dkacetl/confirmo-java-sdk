@@ -17,8 +17,8 @@ public class InvoiceEntity {
      * connection between Confirmo and InvoiceEntity.
      */
     @Id
-    @Column(name = "reference")
-    private String reference;
+    @Column
+    private String id;
 
     @Column(name = "confirmo_invoice_id")
     private String confirmoInvoiceId;
@@ -26,23 +26,11 @@ public class InvoiceEntity {
     @Column(name = "amount")
     private Float amount;
 
-    @Column(name = "currency_from")
-    private String currencyFrom;
-
-    @Column(name = "amount_from")
-    private Float amountFrom;
-
-    @Column(name = "currency_to")
-    private String currencyTo;
-
-    @Column(name = "amount_to")
-    private Float amountTo;
+    @Column(name = "currency")
+    private String currency;
 
     @Column(name = "tenant_id")
     private String tenantId;
-
-    @Column(name = "bitcoinpay_status")
-    private String bitcoinpayStatus;
 
     @Column(name = "status")
     private String status;
@@ -53,20 +41,20 @@ public class InvoiceEntity {
     @Column(name = "updated")
     private LocalDateTime updated;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getConfirmoInvoiceId() {
         return confirmoInvoiceId;
     }
 
     public void setConfirmoInvoiceId(String confirmoInvoiceId) {
         this.confirmoInvoiceId = confirmoInvoiceId;
-    }
-
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
     }
 
     public Float getAmount() {
@@ -77,36 +65,12 @@ public class InvoiceEntity {
         this.amount = amount;
     }
 
-    public String getCurrencyFrom() {
-        return currencyFrom;
+    public String getCurrency() {
+        return currency;
     }
 
-    public void setCurrencyFrom(String currencyFrom) {
-        this.currencyFrom = currencyFrom;
-    }
-
-    public Float getAmountFrom() {
-        return amountFrom;
-    }
-
-    public void setAmountFrom(Float amountFrom) {
-        this.amountFrom = amountFrom;
-    }
-
-    public String getCurrencyTo() {
-        return currencyTo;
-    }
-
-    public void setCurrencyTo(String currencyTo) {
-        this.currencyTo = currencyTo;
-    }
-
-    public Float getAmountTo() {
-        return amountTo;
-    }
-
-    public void setAmountTo(Float amountTo) {
-        this.amountTo = amountTo;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public String getTenantId() {
@@ -115,14 +79,6 @@ public class InvoiceEntity {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
-    }
-
-    public String getBitcoinpayStatus() {
-        return bitcoinpayStatus;
-    }
-
-    public void setBitcoinpayStatus(String bitcoinpayStatus) {
-        this.bitcoinpayStatus = bitcoinpayStatus;
     }
 
     public String getStatus() {
@@ -148,6 +104,4 @@ public class InvoiceEntity {
     public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
     }
-
-
 }
