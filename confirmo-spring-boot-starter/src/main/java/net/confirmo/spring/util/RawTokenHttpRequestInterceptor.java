@@ -1,4 +1,4 @@
-package net.confirmo.client.restapi.util;
+package net.confirmo.spring.util;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- *
+ * @deprecated use
  */
 public class RawTokenHttpRequestInterceptor implements ClientHttpRequestInterceptor {
 

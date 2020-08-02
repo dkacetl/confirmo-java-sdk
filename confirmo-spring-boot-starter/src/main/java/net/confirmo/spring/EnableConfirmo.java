@@ -1,4 +1,4 @@
-package net.confirmo.client.restapi;
+package net.confirmo.spring;
 
 import org.springframework.context.annotation.Import;
 

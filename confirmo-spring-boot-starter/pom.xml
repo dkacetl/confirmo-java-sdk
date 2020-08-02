@@ -59,13 +59,14 @@
 							<inputSpec>${project.basedir}/../confirmo-api/src/main/resources/openapi/confirmo-api.yaml</inputSpec>
 							<skipValidateSpec>true</skipValidateSpec>
 							<generatorName>java</generatorName>
-							<apiPackage>net.confirmo.client.restapi.api</apiPackage>
-							<modelPackage>net.confirmo.client.restapi.model</modelPackage>
-							<invokerPackage>net.confirmo.client.restapi.client</invokerPackage>
-							<packageName>net.confirmo.client.restapi</packageName>
+							<apiPackage>net.confirmo.api.spring</apiPackage>
+							<modelPackage>net.confirmo.api.model</modelPackage>
+							<invokerPackage>net.confirmo.api.spring.invoker</invokerPackage>
+							<packageName>net.confirmo.api.spring</packageName>
 							<generateModels>false</generateModels>
-							<modelNamePrefix></modelNamePrefix>
 							<library>resttemplate</library>
+							<generateModelTests>false</generateModelTests>
+							<generateApiTests>false</generateApiTests>
 						</configuration>
 					</execution>
 				</executions>

@@ -1,4 +1,4 @@
-package net.confirmo.client.restapi.signature;
+package net.confirmo.spring.signature;
 
 
 import org.assertj.core.api.Assertions;

@@ -1,6 +1,6 @@
-package net.confirmo.client.restapi.signature;
+package net.confirmo.spring.signature;
 
-import net.confirmo.client.restapi.ConfirmoApiClientProperties;
+import net.confirmo.spring.ConfirmoApiClientProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

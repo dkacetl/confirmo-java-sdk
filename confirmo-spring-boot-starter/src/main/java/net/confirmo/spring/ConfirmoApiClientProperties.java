@@ -1,5 +1,6 @@
-package net.confirmo.client.restapi;
+package net.confirmo.spring;
 
+import net.confirmo.api.model.Currency;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,6 +22,12 @@ public class ConfirmoApiClientProperties {
     // protection of webhook endpoint ("unprotected open endpoint")
     // based on content hashing
     private String callbackPassword;
+
+    private Currency invoiceCurrencyFrom = Currency.CZK;
+
+    private Currency invoiceCurrencyTo = null; // user can choose if BTC, LTC or whatever
+
+    private Currency invoiceSettlementCurrency = Currency.CZK;
 
     // ---------------------------------------------------------------------------------------
 
@@ -46,6 +53,30 @@ public class ConfirmoApiClientProperties {
 
     public void setCallbackPassword(String callbackPassword) {
         this.callbackPassword = callbackPassword;
+    }
+
+    public Currency getInvoiceCurrencyFrom() {
+        return invoiceCurrencyFrom;
+    }
+
+    public void setInvoiceCurrencyFrom(Currency invoiceCurrencyFrom) {
+        this.invoiceCurrencyFrom = invoiceCurrencyFrom;
+    }
+
+    public Currency getInvoiceCurrencyTo() {
+        return invoiceCurrencyTo;
+    }
+
+    public void setInvoiceCurrencyTo(Currency invoiceCurrencyTo) {
+        this.invoiceCurrencyTo = invoiceCurrencyTo;
+    }
+
+    public Currency getInvoiceSettlementCurrency() {
+        return invoiceSettlementCurrency;
+    }
+
+    public void setInvoiceSettlementCurrency(Currency invoiceSettlementCurrency) {
+        this.invoiceSettlementCurrency = invoiceSettlementCurrency;
     }
 
     @PostConstruct
