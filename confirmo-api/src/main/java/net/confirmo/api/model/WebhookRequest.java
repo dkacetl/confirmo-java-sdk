@@ -1,6 +1,13 @@
-package net.confirmo.client.restapi.schema;
+package net.confirmo.api.model;
 
-import net.confirmo.client.restapi.model.*;
+import net.confirmo.api.model.CreateNewInvoiceRequestInvoice;
+import net.confirmo.api.model.CreateNewInvoiceRequestProduct;
+import net.confirmo.api.model.CreateNewInvoiceResponse;
+import net.confirmo.api.model.CreateNewInvoiceResponseFlags;
+import net.confirmo.api.model.CreateNewInvoiceResponseMerchantAmount;
+import net.confirmo.api.model.CreateNewInvoiceResponsePaid;
+import net.confirmo.api.model.CreateNewInvoiceResponseRate;
+import net.confirmo.api.model.CreateNewInvoiceResponseSettlement;
 
 public class WebhookRequest {
     String id;                   //": "inv3e4vx8oke",

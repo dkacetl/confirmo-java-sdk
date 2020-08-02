@@ -108,7 +108,10 @@
       "type": "string"
     },
     "refunds": {
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
     },
     "settlement": {
       "type": "object",
@@ -141,6 +144,7 @@
     },
     "status": {
       "enum": [
+        "prepared",
         "active",
         "confirming",
         "paid",
@@ -187,7 +191,10 @@
       "type": "number"
     },
     "cryptoTransactions": {
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
     },
     "unhandledExceptions": {
       "type": "boolean"

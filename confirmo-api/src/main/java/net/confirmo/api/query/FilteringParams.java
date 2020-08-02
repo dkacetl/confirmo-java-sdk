@@ -1,4 +1,4 @@
-package net.confirmo.client.restapi;
+package net.confirmo.api.query;
 
 import java.util.Map;
 import java.util.StringJoiner;

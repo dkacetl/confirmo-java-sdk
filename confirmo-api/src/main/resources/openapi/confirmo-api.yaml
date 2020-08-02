@@ -35,7 +35,7 @@ paths:
       tags:
         - invoice
       summary: Create new invoice
-      operationId: create-new-invoice
+      operationId: createNewInvoice
       requestBody:
         description: Create new invoice
         content:
@@ -82,7 +82,7 @@ paths:
         - in: query
           name: createdAtTo
           schema:
-            type: string
+            type: number
         - in: query
           name: status
           schema:

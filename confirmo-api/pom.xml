@@ -41,6 +41,17 @@
 			<artifactId>jackson-databind-nullable</artifactId>
 			<version>0.2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -58,12 +69,15 @@
 							<inputSpec>${project.basedir}/src/main/resources/openapi/confirmo-api.yaml</inputSpec>
 							<skipValidateSpec>true</skipValidateSpec>
 							<generatorName>java</generatorName>
-							<apiPackage>net.confirmo.client.restapi.api</apiPackage>
-							<modelPackage>net.confirmo.client.restapi.model</modelPackage>
-							<invokerPackage>net.confirmo.client.restapi.client</invokerPackage>
-							<packageName>net.confirmo.client.restapi</packageName>
+							<modelPackage>net.confirmo.api.model</modelPackage>
+							<apiPackage>net.confirmo.api.client</apiPackage>
+							<invokerPackage>net.confirmo.api.client.invoker</invokerPackage>
+							<packageName>net.confirmo.api</packageName>
 							<modelNamePrefix></modelNamePrefix>
+							<generateApis>true</generateApis>
 							<library>native</library>
+							<generateModelTests>false</generateModelTests>
+							<generateApiTests>false</generateApiTests>
 						</configuration>
 					</execution>
 				</executions>

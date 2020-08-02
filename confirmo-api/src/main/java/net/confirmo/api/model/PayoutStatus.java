@@ -1,4 +1,4 @@
-package net.confirmo.client.restapi;
+package net.confirmo.api.model;
 
 public enum PayoutStatus {
 
