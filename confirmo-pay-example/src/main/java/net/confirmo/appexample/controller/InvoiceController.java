@@ -21,8 +21,9 @@ public class InvoiceController {
 
     @PostMapping(value = "/createInvoice")
     public String createInvoice(@ModelAttribute InvoiceForm invoiceForm, Model model) {
+        String id = invoiceManager.generateInvoiceId();
         CreateNewInvoiceResponse newInvoiceResponse = invoiceManager.createInvoice(
-                invoiceForm.getAmount(), invoiceForm.getReference());
+                invoiceForm.getAmount(), id);
         LOGGER.info("Invoice created: {}",newInvoiceResponse);
 
         return "redirect:"+newInvoiceResponse.getUrl();

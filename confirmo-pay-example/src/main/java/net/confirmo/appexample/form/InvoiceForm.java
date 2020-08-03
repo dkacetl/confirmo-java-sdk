@@ -1,13 +1,11 @@
 package net.confirmo.appexample.form;
 
 
-import java.util.UUID;
-
 public class InvoiceForm {
 
-    private float amount = 1;
+    private float amount = 0.5f;
 
-    private String reference = UUID.randomUUID().toString(); // TODO: use internal id of payment
+    private CurrencyForm currencyForm;
 
     public float getAmount() {
         return amount;
@@ -17,11 +15,11 @@ public class InvoiceForm {
         this.amount = amount;
     }
 
-    public String getReference() {
-        return reference;
+    public CurrencyForm getCurrencyForm() {
+        return currencyForm;
     }
 
-    public void setReference(String reference) {
-        this.reference = reference;
+    public void setCurrencyForm(CurrencyForm currencyForm) {
+        this.currencyForm = currencyForm;
     }
 }
