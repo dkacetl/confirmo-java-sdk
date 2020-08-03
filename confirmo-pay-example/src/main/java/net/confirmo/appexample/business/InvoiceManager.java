@@ -7,10 +7,9 @@ import net.confirmo.appexample.ConfirmoPayExampleProperties;
 import net.confirmo.appexample.db.InvoiceRepository;
 import net.confirmo.appexample.model.InvoiceEntity;
 import net.confirmo.spring.invoice.InvoiceService;
-import net.confirmo.spring.invoice.builder.InvoiceRequestBuilderService;
+import net.confirmo.spring.invoice.builder.InvoiceRequestBuilderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class InvoiceManager {
@@ -19,15 +18,15 @@ public class InvoiceManager {
 
     private ConfirmoPayExampleProperties confirmoPayExampleProperties;
 
-    private InvoiceRequestBuilderService invoiceRequestBuilderService;
+    private InvoiceRequestBuilderFactory invoiceRequestBuilderFactory;
 
     private InvoiceRepository invoiceRepository;
 
     @Autowired
-    public InvoiceManager(InvoiceService invoiceService, ConfirmoPayExampleProperties confirmoPayExampleProperties, InvoiceRequestBuilderService invoiceRequestBuilderService, InvoiceRepository invoiceRepository) {
+    public InvoiceManager(InvoiceService invoiceService, ConfirmoPayExampleProperties confirmoPayExampleProperties, InvoiceRequestBuilderFactory invoiceRequestBuilderFactory, InvoiceRepository invoiceRepository) {
         this.invoiceService = invoiceService;
         this.confirmoPayExampleProperties = confirmoPayExampleProperties;
-        this.invoiceRequestBuilderService = invoiceRequestBuilderService;
+        this.invoiceRequestBuilderFactory = invoiceRequestBuilderFactory;
         this.invoiceRepository = invoiceRepository;
     }
 
@@ -59,7 +58,7 @@ public class InvoiceManager {
     }
 
     private InvoiceRequestBuilder createBuilder(String reference) {
-        return invoiceRequestBuilderService.createBuilder()
+        return invoiceRequestBuilderFactory.create()
                 .reference(reference,
                         confirmoPayExampleProperties.getNotifyUrl() + "/"+reference,
                         confirmoPayExampleProperties.getReturnUrl() + "/"+reference);

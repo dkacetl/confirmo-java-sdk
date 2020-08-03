@@ -1,12 +1,12 @@
 package net.confirmo.spring;
 
-import net.confirmo.spring.invoice.builder.GeneralInvoiceRequestBuilderService;
-import net.confirmo.spring.invoice.builder.InvoiceRequestBuilderService;
-import net.confirmo.spring.invoice.builder.PropertyBasedInvoiceRequestBuilderCustomizer;
 import net.confirmo.api.spring.InvoiceApi;
 import net.confirmo.api.spring.invoker.ApiClient;
-import net.confirmo.spring.invoice.InvoiceService;
+import net.confirmo.api.tools.InvoiceRequestCustomizer;
+import net.confirmo.spring.invoice.builder.ConfirmoPreConfigInvoiceProperties;
 import net.confirmo.spring.invoice.RestTemplateInvoiceService;
+import net.confirmo.spring.invoice.builder.InvoiceRequestBuilderFactory;
+import net.confirmo.spring.invoice.builder.PreConfigInvoiceRequestCustomizer;
 import net.confirmo.spring.signature.BpSignatureManager;
 import net.confirmo.spring.signature.BpSignatureManagerImpl;
 import net.confirmo.spring.signature.BpSignatureRequestEntityValidator;
@@ -24,25 +24,40 @@ import org.springframework.web.client.RestTemplate;
  * Spring configuration
  */
 @Configuration
-@EnableConfigurationProperties(ConfirmoApiClientProperties.class)
+@EnableConfigurationProperties(
+        {ConfirmoApiClientProperties.class,
+        ConfirmoPreConfigInvoiceProperties.class})
 @Import({InvoiceApi.class,
         RestTemplateInvoiceService.class,
-        PropertyBasedInvoiceRequestBuilderCustomizer.class,
-        GeneralInvoiceRequestBuilderService.class
+        InvoiceRequestBuilderFactory.class
 })
 public class ConfirmoConfiguration {
 
-    @Autowired
     private ConfirmoApiClientProperties confirmoApiClientProperties;
 
+    private ConfirmoPreConfigInvoiceProperties confirmoPreConfigInvoiceProperties;
+
+    public ConfirmoConfiguration(@Autowired ConfirmoApiClientProperties confirmoApiClientProperties,
+                                 @Autowired ConfirmoPreConfigInvoiceProperties confirmoPreConfigInvoiceProperties) {
+        this.confirmoApiClientProperties = confirmoApiClientProperties;
+        this.confirmoPreConfigInvoiceProperties = confirmoPreConfigInvoiceProperties;
+    }
+
     @Bean
-    public ApiClient springApiClient(@Autowired RestTemplateBuilder restTemplateBuilder) {
+    public ApiClient springApiClient(@Autowired RestTemplateBuilder restTemplateBuilder)
+    {
         RestTemplate restTemplate = restTemplateBuilder.build();
         ApiClient springApiClient = new ApiClient(restTemplate);
 
         springApiClient.setBasePath(confirmoApiClientProperties.getUrl());
         springApiClient.setBearerToken(confirmoApiClientProperties.getApiKey());
         return springApiClient;
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "confirmo", name = "pre-config-invoice", matchIfMissing = true)
+    public InvoiceRequestCustomizer propertyBasedInvoiceRequestCustomizer() {
+        return new PreConfigInvoiceRequestCustomizer(confirmoPreConfigInvoiceProperties);
     }
 
     /**

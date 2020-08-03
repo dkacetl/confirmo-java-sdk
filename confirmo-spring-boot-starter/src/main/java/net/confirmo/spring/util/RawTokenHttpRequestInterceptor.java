@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * @deprecated use
+ * @deprecated use {@link net.confirmo.api.spring.invoker.ApiClient} and set the bearer token directly.
  */
 public class RawTokenHttpRequestInterceptor implements ClientHttpRequestInterceptor {
 

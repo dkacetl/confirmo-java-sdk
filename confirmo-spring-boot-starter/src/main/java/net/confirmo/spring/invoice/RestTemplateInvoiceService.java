@@ -20,7 +20,7 @@ public class RestTemplateInvoiceService implements InvoiceService {
     }
 
     public InvoicesResponse getAll(FilteringParams filteringParams) {
-        InvoicesResponse invoicesResponse = invoiceApi.getInvoicesList(
+        return invoiceApi.getInvoicesList(
                 BigDecimal.valueOf(filteringParams.getLimit()),
                 BigDecimal.valueOf(filteringParams.getOffset()),
                 filteringParams.getOrder().name(),
@@ -28,7 +28,6 @@ public class RestTemplateInvoiceService implements InvoiceService {
                 BigDecimal.valueOf(filteringParams.getCreatedAtTo()),
                 filteringParams.getStatus().name()
         );
-        return invoicesResponse;
     }
 
     public InvoicesResponse getOne(String invoiceId){

@@ -15,6 +15,11 @@ public class InvoiceRequestBuilder {
 
     private CreateNewInvoiceRequest createNewInvoiceRequest;
 
+    private InvoiceRequestCustomizer[] invoiceRequestCustomizers = new InvoiceRequestCustomizer[0];
+
+    /** flag is set to true when build() method was executed. executed only once for security reason. **/
+    private boolean built = false;
+
     public InvoiceRequestBuilder() {
         this.createNewInvoiceRequest = new CreateNewInvoiceRequest();
 
@@ -26,6 +31,11 @@ public class InvoiceRequestBuilder {
 
         CreateNewInvoiceRequestInvoice invoice = new CreateNewInvoiceRequestInvoice();
         this.createNewInvoiceRequest.setInvoice(invoice);
+    }
+
+    public InvoiceRequestBuilder(InvoiceRequestCustomizer[] customizers) {
+        this();
+        this.invoiceRequestCustomizers = customizers;
     }
 
     public InvoiceRequestBuilder product(String name, String description) {
@@ -73,7 +83,30 @@ public class InvoiceRequestBuilder {
         return this;
     }
 
-    public CreateNewInvoiceRequest build() {
+    /**
+     * Builder for invoice request instance. Building has a side effects, for prevent, can be used only once.
+     *
+     * @return invoice request
+     * @throws IllegalStateException build() was called multiple times, this is not allowed.
+     */
+    public CreateNewInvoiceRequest build() throws IllegalStateException {
+        if (built) {
+            throw new IllegalStateException("Builder can be used only once. Please use another builder instance.");
+        }
+        if (invoiceRequestCustomizers!=null) {
+            for (InvoiceRequestCustomizer requestCustomizer : invoiceRequestCustomizers) {
+                this.createNewInvoiceRequest = requestCustomizer.customize(this.createNewInvoiceRequest);
+            }
+        }
+        built = true; // done, set flag!
         return this.createNewInvoiceRequest;
+    }
+
+    public InvoiceRequestCustomizer[] getInvoiceRequestCustomizers() {
+        return invoiceRequestCustomizers;
+    }
+
+    public void setInvoiceRequestCustomizers(InvoiceRequestCustomizer[] invoiceRequestCustomizers) {
+        this.invoiceRequestCustomizers = invoiceRequestCustomizers;
     }
 }
