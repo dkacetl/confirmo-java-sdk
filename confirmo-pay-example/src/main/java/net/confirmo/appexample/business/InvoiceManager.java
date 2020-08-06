@@ -2,12 +2,16 @@ package net.confirmo.appexample.business;
 
 import net.confirmo.api.model.CreateNewInvoiceRequest;
 import net.confirmo.api.model.CreateNewInvoiceResponse;
+import net.confirmo.api.model.Currency;
+import net.confirmo.api.model.InvoiceDetailResponse;
 import net.confirmo.api.tools.InvoiceRequestBuilder;
 import net.confirmo.appexample.ConfirmoPayExampleProperties;
 import net.confirmo.appexample.db.InvoiceRepository;
-import net.confirmo.appexample.model.InvoiceEntity;
+import net.confirmo.appexample.db.InvoiceEntity;
+import net.confirmo.appexample.model.Invoice;
 import net.confirmo.spring.invoice.InvoiceService;
 import net.confirmo.spring.invoice.builder.InvoiceRequestBuilderFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,27 +43,33 @@ public class InvoiceManager {
     /**
      *
      * @param amount
-     * @param reference
+     * @param id
      * @return
      */
-    public CreateNewInvoiceResponse createInvoice(float amount, String reference) {
+    public Invoice createInvoice(String id, float amount, Currency currency) {
 
-        CreateNewInvoiceRequest invoiceRequest = createBuilder(reference)
-                .product("Confirmo product example","Pleas pay for me, "+reference)
-                .invoiceAmount(amount)
+        CreateNewInvoiceRequest invoiceRequest = createBuilder(id)
+                .product("Confirmo product example","Pleas pay for me, "+id)
+                .invoice(Currency.CZK, amount, Currency.CZK)
                 .build();
 
-        createRecord(amount, reference);
+        CreateNewInvoiceResponse createNewInvoiceResponse = invoiceService.create(invoiceRequest);
 
-        return invoiceService.create(invoiceRequest);
+        InvoiceEntity invoiceEntity = createRecord(id, amount, currency);
+
+        InvoiceDetailResponse invoiceDetailResponse = new InvoiceDetailResponse();
+        BeanUtils.copyProperties(createNewInvoiceResponse, invoiceDetailResponse);
+
+        return new Invoice(invoiceEntity, invoiceDetailResponse);
     }
 
-    private void createRecord(float amount, String reference) {
+    private InvoiceEntity createRecord(String id, float amount, Currency currency) {
         InvoiceEntity invoiceEntity = new InvoiceEntity();
         invoiceEntity.setAmount(amount);
-        invoiceEntity.setId(reference);
+        invoiceEntity.setId(id);
         invoiceEntity.setStatus("creating");
-        invoiceRepository.save(invoiceEntity);
+        invoiceEntity.setCurrency(currency);
+        return invoiceRepository.save(invoiceEntity);
     }
 
     private InvoiceRequestBuilder createBuilder(String reference) {

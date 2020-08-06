@@ -5,7 +5,7 @@ import net.confirmo.api.model.Currency;
 public enum CurrencyForm {
     BTC(Currency.BTC),
     LTC(Currency.LTC),
-    UNDEFINED(null);
+    CHOOSE_LATER(null);
 
     private Currency currency;
 
