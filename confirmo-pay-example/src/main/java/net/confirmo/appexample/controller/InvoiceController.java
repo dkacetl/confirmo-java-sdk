@@ -1,7 +1,5 @@
 package net.confirmo.appexample.controller;
 
-import net.confirmo.api.model.CreateNewInvoiceResponse;
-import net.confirmo.api.query.BitcoinPayStatus;
 import net.confirmo.appexample.business.InvoiceManager;
 import net.confirmo.appexample.form.InvoiceForm;
 import net.confirmo.appexample.model.Invoice;
@@ -25,7 +23,7 @@ public class InvoiceController {
         String id = invoiceManager.generateInvoiceId();
 
         Invoice invoice = invoiceManager.createInvoice(id, invoiceForm.getAmount(),
-                invoiceForm.getCurrencyForm().getCurrency());
+                invoiceForm.getTargetCryptocurrencySelection().getCurrency());
 
         LOGGER.info("Invoice created: {}", invoice.getInvoiceDetailResponse());
 

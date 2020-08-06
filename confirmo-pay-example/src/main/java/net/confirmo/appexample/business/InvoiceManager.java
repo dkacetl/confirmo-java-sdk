@@ -46,16 +46,16 @@ public class InvoiceManager {
      * @param id
      * @return
      */
-    public Invoice createInvoice(String id, float amount, Currency currency) {
+    public Invoice createInvoice(String id, float amount, Currency targetCryptocurrency) {
 
         CreateNewInvoiceRequest invoiceRequest = createBuilder(id)
                 .product("Confirmo product example","Pleas pay for me, "+id)
-                .invoice(Currency.CZK, amount, Currency.CZK)
+                .invoice(Currency.CZK, amount, targetCryptocurrency)
                 .build();
 
         CreateNewInvoiceResponse createNewInvoiceResponse = invoiceService.create(invoiceRequest);
 
-        InvoiceEntity invoiceEntity = createRecord(id, amount, currency);
+        InvoiceEntity invoiceEntity = createRecord(id, amount, targetCryptocurrency);
 
         InvoiceDetailResponse invoiceDetailResponse = new InvoiceDetailResponse();
         BeanUtils.copyProperties(createNewInvoiceResponse, invoiceDetailResponse);
