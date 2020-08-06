@@ -10,7 +10,6 @@
 	</parent>
 
 	<artifactId>confirmo-pay-example</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>confirmo-pay-example</name>
 	<description>Demo for confirmo</description>
 
