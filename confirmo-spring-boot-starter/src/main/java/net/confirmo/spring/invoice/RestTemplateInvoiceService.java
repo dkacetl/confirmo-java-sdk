@@ -1,7 +1,6 @@
 package net.confirmo.spring.invoice;
 
 import net.confirmo.api.model.CreateNewInvoiceRequest;
-import net.confirmo.api.model.CreateNewInvoiceResponse;
 import net.confirmo.api.model.InvoiceDetailResponse;
 import net.confirmo.api.query.FilteringParams;
 import net.confirmo.api.model.InvoicesResponse;
@@ -39,7 +38,7 @@ public class RestTemplateInvoiceService implements InvoiceService {
         return invoiceDetailResponse;
     }
 
-    public CreateNewInvoiceResponse create(CreateNewInvoiceRequest createNewInvoiceRequest) {
+    public InvoiceDetailResponse create(CreateNewInvoiceRequest createNewInvoiceRequest) {
         return invoiceApi.createNewInvoice(createNewInvoiceRequest);
     }
 }
