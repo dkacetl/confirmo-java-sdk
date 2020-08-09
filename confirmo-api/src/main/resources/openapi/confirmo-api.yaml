@@ -10,26 +10,6 @@ servers:
   - url: https://confirmo.net/api/v3/
     description: Production URL
 paths:
-  /invoices/{id}:
-    get:
-      summary: Get invoice by Id
-      operationId: getInvoiceById
-      tags:
-        - invoice
-      parameters:
-        - in: path
-          name: id
-          description: ID of invoice
-          required: false
-          schema:
-            type: string
-      responses:
-        200:
-          description: Single invoice
-          content:
-            application/json:
-              schema:
-                $ref: './schema/invoices-response.json'
   /invoices:
     post:
       tags:
@@ -49,7 +29,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './schema/create-new-invoice-response.json'
+                $ref: './schema/invoice-detail-response.json'
         400:
           description: Invalid request
           content: {}
@@ -105,6 +85,26 @@ paths:
         405:
           description: Validation exception
           content: {}
+  /invoices/{id}:
+    get:
+      summary: Get invoice by Id
+      operationId: getInvoiceById
+      tags:
+        - invoice
+      parameters:
+        - in: path
+          name: id
+          description: ID of invoice
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Single invoice
+          content:
+            application/json:
+              schema:
+                $ref: './schema/invoice-detail-response.json'
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme

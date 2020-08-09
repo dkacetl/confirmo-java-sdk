@@ -5,7 +5,7 @@ public class InvoiceForm {
 
     private float amount = 0.5f;
 
-    private CurrencyForm currencyForm;
+    private TargetCryptocurrencySelection targetCryptocurrencySelection;
 
     public float getAmount() {
         return amount;
@@ -15,11 +15,11 @@ public class InvoiceForm {
         this.amount = amount;
     }
 
-    public CurrencyForm getCurrencyForm() {
-        return currencyForm;
+    public TargetCryptocurrencySelection getTargetCryptocurrencySelection() {
+        return targetCryptocurrencySelection;
     }
 
-    public void setCurrencyForm(CurrencyForm currencyForm) {
-        this.currencyForm = currencyForm;
+    public void setTargetCryptocurrencySelection(TargetCryptocurrencySelection targetCryptocurrencySelection) {
+        this.targetCryptocurrencySelection = targetCryptocurrencySelection;
     }
 }

@@ -1,71 +1,20 @@
 package net.confirmo.appexample.business;
 
-import net.confirmo.api.model.CreateNewInvoiceRequest;
-import net.confirmo.api.model.CreateNewInvoiceResponse;
-import net.confirmo.api.tools.InvoiceRequestBuilder;
-import net.confirmo.appexample.ConfirmoPayExampleProperties;
-import net.confirmo.appexample.db.InvoiceRepository;
-import net.confirmo.appexample.model.InvoiceEntity;
-import net.confirmo.spring.invoice.InvoiceService;
-import net.confirmo.spring.invoice.builder.InvoiceRequestBuilderFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import net.confirmo.api.model.Currency;
+import net.confirmo.api.query.BitcoinPayStatus;
+import net.confirmo.appexample.model.Invoice;
+import net.confirmo.spring.invoice.InvoiceNotFoundException;
 
-import java.util.UUID;
+public interface InvoiceManager {
 
-@Component
-public class InvoiceManager {
+    String generateInvoiceId();
 
-    private InvoiceService invoiceService;
+    Invoice createInvoice(String id, float amount, Currency targetCryptocurrency);
 
-    private ConfirmoPayExampleProperties confirmoPayExampleProperties;
+    Invoice loadInvoice(String id) throws InvoiceNotFoundException;
 
-    private InvoiceRequestBuilderFactory invoiceRequestBuilderFactory;
+    Invoice synchronize(Invoice invoice);
 
-    private InvoiceRepository invoiceRepository;
+    Invoice handleInvoiceCallback(String id, BitcoinPayStatus bitcoinPayStatus);
 
-    @Autowired
-    public InvoiceManager(InvoiceService invoiceService, ConfirmoPayExampleProperties confirmoPayExampleProperties, InvoiceRequestBuilderFactory invoiceRequestBuilderFactory, InvoiceRepository invoiceRepository) {
-        this.invoiceService = invoiceService;
-        this.confirmoPayExampleProperties = confirmoPayExampleProperties;
-        this.invoiceRequestBuilderFactory = invoiceRequestBuilderFactory;
-        this.invoiceRepository = invoiceRepository;
-    }
-
-    public String generateInvoiceId() {
-        return UUID.randomUUID().toString();
-    }
-
-    /**
-     *
-     * @param amount
-     * @param reference
-     * @return
-     */
-    public CreateNewInvoiceResponse createInvoice(float amount, String reference) {
-
-        CreateNewInvoiceRequest invoiceRequest = createBuilder(reference)
-                .product("Confirmo product example","Pleas pay for me, "+reference)
-                .invoiceAmount(amount)
-                .build();
-
-        createRecord(amount, reference);
-
-        return invoiceService.create(invoiceRequest);
-    }
-
-    private void createRecord(float amount, String reference) {
-        InvoiceEntity invoiceEntity = new InvoiceEntity();
-        invoiceEntity.setAmount(amount);
-        invoiceEntity.setId(reference);
-        invoiceEntity.setStatus("creating");
-        invoiceRepository.save(invoiceEntity);
-    }
-
-    private InvoiceRequestBuilder createBuilder(String reference) {
-        return invoiceRequestBuilderFactory.create()
-                .reference(reference,
-                        confirmoPayExampleProperties.getNotifyUrl() + "/"+reference,
-                        confirmoPayExampleProperties.getReturnUrl() + "/"+reference);
-    }
 }

@@ -1,13 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Confirmo pay example - Invoice Form</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    </head>
+    <head th:replace="fragments/layout :: head" />
     <body>
+        <nav th:replace="fragments/layout :: navigation" />
+
         <div class="container">
-            <h1>Confirmo pay example</h1>
+            <h1>Create New Invoice</h1>
             <form class="form-signin" action="#" th:action="@{createInvoice}" th:object="${invoiceForm}" method="post" >
                 <div class="form-group">
                     <label for="number">Amount (CZK)</label>
@@ -15,10 +13,10 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Select cryptocurrency</label>
-                    <select class="form-control" id="exampleFormControlSelect1" th:field="*{currencyForm}">
+                    <select class="form-control" id="exampleFormControlSelect1" th:field="*{targetCryptocurrencySelection}">
                         <option value="BTC">bitcoin</option>
                         <option value="LTC">litecoin</option>
-                        <option value="UNDEFINED"></option>
+                        <option value="CHOOSE_LATER">I'll choose later on payment gateway</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -27,8 +25,6 @@
                 </div>
             </form>
         </div>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
+    <footer th:replace="fragments/layout :: footer"/>
 </html>

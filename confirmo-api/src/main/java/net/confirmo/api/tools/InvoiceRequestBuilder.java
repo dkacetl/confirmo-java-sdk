@@ -1,20 +1,28 @@
 package net.confirmo.api.tools;
 
-import net.confirmo.api.model.CreateNewInvoiceRequest;
-import net.confirmo.api.model.CreateNewInvoiceRequestInvoice;
-import net.confirmo.api.model.CreateNewInvoiceRequestProduct;
-import net.confirmo.api.model.CreateNewInvoiceRequestSettlement;
-import net.confirmo.api.model.Currency;
+import net.confirmo.api.model.*;
 
 import java.text.DecimalFormat;
 import java.text.Format;
 
+/**
+ * Builder pattern for easier creation of complex
+ * {@link CreateNewInvoiceRequest} structure
+ *
+ * During final building of {@link CreateNewInvoiceRequest}, object can be customized
+ * by chain of {@link InvoiceRequestCustomizer}.
+ *
+ * Builder can be used only once. It prevents side effects and corresponds to
+ * builder design pattern.
+ */
 public class InvoiceRequestBuilder {
 
     private static final Format format = new DecimalFormat("#.########");
 
+    /** instance of new created object */
     private CreateNewInvoiceRequest createNewInvoiceRequest;
 
+    /** customizers of new created object */
     private InvoiceRequestCustomizer[] invoiceRequestCustomizers = new InvoiceRequestCustomizer[0];
 
     /** flag is set to true when build() method was executed. executed only once for security reason. **/
@@ -33,6 +41,10 @@ public class InvoiceRequestBuilder {
         this.createNewInvoiceRequest.setInvoice(invoice);
     }
 
+    /**
+     * Inject cutomizers of created object
+     * @param customizers customizers
+     */
     public InvoiceRequestBuilder(InvoiceRequestCustomizer[] customizers) {
         this();
         this.invoiceRequestCustomizers = customizers;
