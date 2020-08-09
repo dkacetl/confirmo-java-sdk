@@ -6,7 +6,8 @@ package net.confirmo.api.query;
 public enum BitcoinPayStatus {
     prepared,
     confirming,
-    confirmed,
+    confirmed, // not clear
+    paid,
     canceled,
     expired;
 }

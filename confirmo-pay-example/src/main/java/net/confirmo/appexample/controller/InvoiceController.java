@@ -20,9 +20,12 @@ public class InvoiceController {
 
     @PostMapping(value = "/createInvoice")
     public String createInvoice(@ModelAttribute InvoiceForm invoiceForm, Model model) {
+
         String id = invoiceManager.generateInvoiceId();
 
-        Invoice invoice = invoiceManager.createInvoice(id, invoiceForm.getAmount(),
+        Invoice invoice = invoiceManager.createInvoice(
+                id,
+                invoiceForm.getAmount(),
                 invoiceForm.getTargetCryptocurrencySelection().getCurrency());
 
         LOGGER.info("Invoice created: {}", invoice.getInvoiceDetailResponse());

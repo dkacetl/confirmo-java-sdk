@@ -1,10 +1,6 @@
 package net.confirmo.api.tools;
 
-import net.confirmo.api.model.CreateNewInvoiceRequest;
-import net.confirmo.api.model.CreateNewInvoiceRequestInvoice;
-import net.confirmo.api.model.CreateNewInvoiceRequestProduct;
-import net.confirmo.api.model.CreateNewInvoiceRequestSettlement;
-import net.confirmo.api.model.Currency;
+import net.confirmo.api.model.*;
 
 import java.text.DecimalFormat;
 import java.text.Format;

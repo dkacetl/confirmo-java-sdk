@@ -108,7 +108,10 @@
       "type": "string"
     },
     "refunds": {
-      "type": "string"
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
     },
     "settlement": {
       "type": "object",
@@ -187,7 +190,10 @@
       "type": "number"
     },
     "cryptoTransactions": {
-      "type": "string"
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
     },
     "unhandledExceptions": {
       "type": "boolean"

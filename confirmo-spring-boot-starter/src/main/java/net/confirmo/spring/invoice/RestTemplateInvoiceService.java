@@ -2,6 +2,7 @@ package net.confirmo.spring.invoice;
 
 import net.confirmo.api.model.CreateNewInvoiceRequest;
 import net.confirmo.api.model.CreateNewInvoiceResponse;
+import net.confirmo.api.model.InvoiceDetailResponse;
 import net.confirmo.api.query.FilteringParams;
 import net.confirmo.api.model.InvoicesResponse;
 import net.confirmo.api.spring.InvoiceApi;
@@ -30,8 +31,12 @@ public class RestTemplateInvoiceService implements InvoiceService {
         );
     }
 
-    public InvoicesResponse getOne(String invoiceId){
-        return invoiceApi.getInvoiceById(invoiceId);
+    public InvoiceDetailResponse getOne(String confirmoInvoiceId) {
+        InvoiceDetailResponse invoiceDetailResponse = invoiceApi.getInvoiceById(confirmoInvoiceId);
+        if (invoiceDetailResponse==null) {
+            throw new InvoiceNotFoundException(confirmoInvoiceId);
+        }
+        return invoiceDetailResponse;
     }
 
     public CreateNewInvoiceResponse create(CreateNewInvoiceRequest createNewInvoiceRequest) {

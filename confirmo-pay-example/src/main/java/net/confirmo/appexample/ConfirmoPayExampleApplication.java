@@ -1,5 +1,6 @@
 package net.confirmo.appexample;
 
+import net.confirmo.appexample.db.InvoiceRepository;
 import net.confirmo.spring.EnableConfirmo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +12,7 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @EnableConfirmo
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackageClasses = {InvoiceRepository.class})
 @EnableTransactionManagement
 @Import({ConfirmoPayExampleProperties.class})
 public class ConfirmoPayExampleApplication {

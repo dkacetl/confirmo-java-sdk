@@ -1,6 +1,7 @@
 package net.confirmo.appexample.db;
 
 import net.confirmo.api.model.Currency;
+import net.confirmo.api.query.BitcoinPayStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -38,7 +39,7 @@ public class InvoiceEntity {
     private String tenantId;
 
     @Column(name = "status")
-    private String status;
+    private InvoiceStatus status;
 
     @Column(name = "created")
     private LocalDateTime created;
@@ -86,11 +87,11 @@ public class InvoiceEntity {
         this.tenantId = tenantId;
     }
 
-    public String getStatus() {
+    public InvoiceStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(InvoiceStatus status) {
         this.status = status;
     }
 
