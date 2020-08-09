@@ -29,7 +29,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './schema/create-new-invoice-response.json'
+                $ref: './schema/invoice-detail-response.json'
         400:
           description: Invalid request
           content: {}
