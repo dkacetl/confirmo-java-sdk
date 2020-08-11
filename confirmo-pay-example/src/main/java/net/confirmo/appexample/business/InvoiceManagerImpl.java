@@ -16,14 +16,12 @@ import net.confirmo.spring.invoice.InvoiceNotFoundException;
 import net.confirmo.spring.invoice.InvoiceService;
 import net.confirmo.spring.invoice.builder.InvoiceRequestBuilderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -129,6 +127,7 @@ public class InvoiceManagerImpl implements InvoiceManager {
                 invoiceRequestBuilder(id)
                 .product("Confirmo product example","Please pay for me, "+id)
                 .invoiceAmount(amount)
+                .invoiceCurrency(Currency.CZK, targetCryptocurrency)
                 .build();
 
         InvoiceDetailResponse invoiceDetailResponse = invoiceService.create(invoiceRequest);

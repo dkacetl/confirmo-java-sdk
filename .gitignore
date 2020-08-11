@@ -34,3 +34,5 @@ build/
 /confirmo-pay-example/logs/
 /scp.sh
 /config/
+/confirmo-db.mv.db
+/confirmo-db.trace.db

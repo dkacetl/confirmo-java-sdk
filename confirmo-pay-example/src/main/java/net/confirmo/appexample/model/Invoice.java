@@ -28,7 +28,7 @@ public class Invoice {
     public InvoiceStatus getStatus() {
         if (invoiceDetailResponse!=null) {
             if (invoiceDetailResponse.getStatus()!=null)
-            return InvoiceStatus.valueOf(invoiceDetailResponse.getStatus().getValue().toString());
+                return InvoiceStatus.valueOf(invoiceDetailResponse.getStatus().getValue().toString());
         } else {
             if (invoiceEntity.getStatus()!=null) {
                 return invoiceEntity.getStatus();
