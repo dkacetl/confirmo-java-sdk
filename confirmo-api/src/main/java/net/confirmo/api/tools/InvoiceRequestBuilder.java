@@ -82,14 +82,30 @@ public class InvoiceRequestBuilder {
         return this;
     }
 
+    public InvoiceRequestBuilder invoiceCurrency(Currency from, Currency to) {
+        CreateNewInvoiceRequestInvoice invoice = this.createNewInvoiceRequest.getInvoice();
+        if (from!=null) {
+            invoice.setCurrencyFrom(from.name());
+        }
+
+        if (to!=null) {
+            invoice.setCurrencyTo(to.name());
+        }
+        return this;
+    }
+
     public InvoiceRequestBuilder invoiceAmount(float amount) {
         CreateNewInvoiceRequestInvoice invoice = this.createNewInvoiceRequest.getInvoice();
         invoice.setAmount(format.format(amount));
         return this;
     }
 
-    public InvoiceRequestBuilder reference(String reference, String notifyUrl, String returnUrl) {
+    public InvoiceRequestBuilder reference(String reference) {
         this.createNewInvoiceRequest.setReference(reference);
+        return this;
+    }
+
+    public InvoiceRequestBuilder callbacks(String notifyUrl, String returnUrl) {
         this.createNewInvoiceRequest.setNotifyUrl(notifyUrl);
         this.createNewInvoiceRequest.setReturnUrl(returnUrl);
         return this;

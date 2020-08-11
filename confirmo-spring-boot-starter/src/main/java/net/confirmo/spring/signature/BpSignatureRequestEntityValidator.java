@@ -1,5 +1,6 @@
 package net.confirmo.spring.signature;
 
+import net.confirmo.api.signature.BpSignatureManager;
 import net.confirmo.spring.ConfirmoApiClientProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,6 @@ import java.util.List;
 public class BpSignatureRequestEntityValidator implements RequestEntityValidator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BpSignatureRequestEntityValidator.class);
-
 
     private BpSignatureManager bpSignatureManager;
 

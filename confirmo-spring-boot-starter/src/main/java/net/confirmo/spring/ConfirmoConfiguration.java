@@ -7,11 +7,12 @@ import net.confirmo.spring.invoice.builder.ConfirmoPreConfigInvoiceProperties;
 import net.confirmo.spring.invoice.RestTemplateInvoiceService;
 import net.confirmo.spring.invoice.builder.InvoiceRequestBuilderFactory;
 import net.confirmo.spring.invoice.builder.PreConfigInvoiceRequestCustomizer;
-import net.confirmo.spring.signature.BpSignatureManager;
-import net.confirmo.spring.signature.BpSignatureManagerImpl;
+import net.confirmo.api.signature.BpSignatureManager;
+import net.confirmo.api.signature.Sha256BasedBpSignatureManager;
 import net.confirmo.spring.signature.BpSignatureRequestEntityValidator;
 import net.confirmo.spring.signature.RequestEntityValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -44,6 +45,7 @@ public class ConfirmoConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public ApiClient springApiClient(@Autowired RestTemplateBuilder restTemplateBuilder)
     {
         RestTemplate restTemplate = restTemplateBuilder.build();
@@ -66,11 +68,12 @@ public class ConfirmoConfiguration {
     @Bean
     @ConditionalOnProperty(prefix = "confirmo.rest-api", value = "callback-password")
     public RequestEntityValidator bpSignatureRequestEntityValidator() {
-        return new BpSignatureRequestEntityValidator(this.bpSignatureManager(), confirmoApiClientProperties);
+        return new BpSignatureRequestEntityValidator(bpSignatureManager(), confirmoApiClientProperties);
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public BpSignatureManager bpSignatureManager() {
-        return new BpSignatureManagerImpl();
+        return new Sha256BasedBpSignatureManager();
     }
 }

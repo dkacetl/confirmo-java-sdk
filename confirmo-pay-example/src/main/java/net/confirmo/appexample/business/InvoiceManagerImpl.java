@@ -10,17 +10,24 @@ import net.confirmo.appexample.db.InvoiceEntity;
 import net.confirmo.appexample.db.InvoiceRepository;
 import net.confirmo.appexample.db.InvoiceStatus;
 import net.confirmo.appexample.model.Invoice;
+import net.confirmo.appexample.model.PaginationData;
 import net.confirmo.spring.invoice.InvoiceException;
 import net.confirmo.spring.invoice.InvoiceNotFoundException;
 import net.confirmo.spring.invoice.InvoiceService;
 import net.confirmo.spring.invoice.builder.InvoiceRequestBuilderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class InvoiceManagerImpl implements InvoiceManager {
@@ -43,6 +50,14 @@ public class InvoiceManagerImpl implements InvoiceManager {
 
     public String generateInvoiceId() {
         return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public List<Invoice> getAll(PaginationData paginationData) {
+        Pageable page = PageRequest.of(paginationData.getPage(),paginationData.getSize());
+        return invoiceRepository.findAll(page).stream()
+                .map( (entity) -> new Invoice(entity, null) )
+                .collect(Collectors.toList());
     }
 
     public Invoice handleInvoiceCallback(String id, BitcoinPayStatus bitcoinPayStatus) {
@@ -83,13 +98,12 @@ public class InvoiceManagerImpl implements InvoiceManager {
 
     /**
      * Source of truth for invoice is Confirmo.net invoice
-     * TODO: sync all the properties, not only
+     * TODO: sync all important properties, not only status
      *
      * method synchronize invoiceEntity and confrimoInvoice data
      * @param invoice fully loaded invoice
      * @return invoice
      */
-    @Transactional
     public Invoice synchronize(Invoice invoice) {
         if (invoice==null) {
             throw new IllegalArgumentException("parameter cannot be null");
@@ -97,7 +111,7 @@ public class InvoiceManagerImpl implements InvoiceManager {
         InvoiceEntity invoiceEntity = invoice.getInvoiceEntity();
         invoiceEntity.setStatus(invoice.getStatus());
         invoiceEntity.setConfirmoInvoiceId(invoice.getInvoiceDetailResponse().getId());
-        invoiceRepository.saveAndFlush(invoiceEntity);
+        invoiceRepository.save(invoiceEntity);
         return invoice;
     }
 
@@ -111,9 +125,10 @@ public class InvoiceManagerImpl implements InvoiceManager {
 
         InvoiceEntity invoiceEntity = createInvoiceEntity(id, amount, targetCryptocurrency);
 
-        CreateNewInvoiceRequest invoiceRequest = createBuilder(id)
-                .product("Confirmo product example","Pleas pay for me, "+id)
-                .invoice(Currency.CZK, amount, targetCryptocurrency)
+        CreateNewInvoiceRequest invoiceRequest =
+                invoiceRequestBuilder(id)
+                .product("Confirmo product example","Please pay for me, "+id)
+                .invoiceAmount(amount)
                 .build();
 
         InvoiceDetailResponse invoiceDetailResponse = invoiceService.create(invoiceRequest);
@@ -124,17 +139,18 @@ public class InvoiceManagerImpl implements InvoiceManager {
         return new Invoice(invoiceEntity, invoiceDetailResponse);
     }
 
-    @Transactional
-    public InvoiceEntity createInvoiceEntity(String id, float amount, Currency currency) {
+    private InvoiceEntity createInvoiceEntity(String id, float amount, Currency currency) {
         InvoiceEntity invoiceEntity = new InvoiceEntity();
         invoiceEntity.setAmount(amount);
         invoiceEntity.setId(id);
         invoiceEntity.setStatus(InvoiceStatus.created);
         invoiceEntity.setCurrency(currency);
-        return invoiceRepository.saveAndFlush(invoiceEntity);
+        invoiceEntity.setCreated(LocalDateTime.now());
+        invoiceEntity.setUpdated(LocalDateTime.now());
+        return invoiceRepository.save(invoiceEntity);
     }
 
-    private InvoiceRequestBuilder createBuilder(String reference) {
+    private InvoiceRequestBuilder invoiceRequestBuilder(String reference) {
         String notifyUrl = null;
         if (!StringUtils.isEmpty(confirmoPayExampleProperties.getNotifyUrl())) {
             notifyUrl = confirmoPayExampleProperties.getNotifyUrl() + "/"+reference;
@@ -147,6 +163,7 @@ public class InvoiceManagerImpl implements InvoiceManager {
 
         return invoiceRequestBuilderFactory
                 .create()
-                .reference(reference, notifyUrl, returnUrl);
+                .reference(reference)
+                .callbacks(notifyUrl, returnUrl);
     }
 }

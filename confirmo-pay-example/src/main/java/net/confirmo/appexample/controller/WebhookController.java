@@ -2,10 +2,9 @@ package net.confirmo.appexample.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.confirmo.api.model.WebhookRequest;
+import net.confirmo.api.model.InvoiceDetailResponse;
 import net.confirmo.api.query.BitcoinPayStatus;
 import net.confirmo.appexample.business.InvoiceManager;
-import net.confirmo.appexample.db.InvoiceStatus;
 import net.confirmo.appexample.model.Invoice;
 import net.confirmo.spring.signature.RequestEntityValidator;
 import org.slf4j.Logger;
@@ -58,7 +57,7 @@ public class WebhookController {
         }
         LOGGER.warn("invoice webhook notification !!!!!!!!!! : {}, {}", id, requestEntity.toString());
 
-        WebhookRequest webhookRequest = parseWebhookRequest(requestEntity.getBody());
+        InvoiceDetailResponse webhookRequest = parseWebhookRequest(requestEntity.getBody());
         LOGGER.warn("webhook : {}", webhookRequest.toString());
 
         Invoice invoice = invoiceManager.loadInvoice(id);
@@ -99,12 +98,12 @@ public class WebhookController {
      * @param content
      * @return
      */
-    private WebhookRequest parseWebhookRequest(String content)  {
+    private InvoiceDetailResponse parseWebhookRequest(String content)  {
         if (content==null) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Illegal content");
         }
         try {
-            return objectMapper.readValue(content, WebhookRequest.class);
+            return objectMapper.readValue(content, InvoiceDetailResponse.class);
         } catch (JsonProcessingException e) {
             LOGGER.debug("");
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Illegal content");

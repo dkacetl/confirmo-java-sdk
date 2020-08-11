@@ -1,6 +1,8 @@
 package net.confirmo.spring.signature;
 
 
+import net.confirmo.api.signature.BpSignatureManager;
+import net.confirmo.api.signature.Sha256BasedBpSignatureManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -16,7 +18,7 @@ public class BpSignatureManagerImplTest {
 
     @Test
     public void signingTest() {
-        BpSignatureManager bpSignatureManager = new BpSignatureManagerImpl();
+        BpSignatureManager bpSignatureManager = new Sha256BasedBpSignatureManager();
         String signature = bpSignatureManager.computeBpSignature(testedContent,testedPassword);
         Assertions.assertThat(signature).isEqualTo(expectedBpSignature);
     }

@@ -3,12 +3,15 @@ package net.confirmo.appexample.controller;
 import net.confirmo.appexample.business.InvoiceManager;
 import net.confirmo.appexample.form.InvoiceForm;
 import net.confirmo.appexample.model.Invoice;
+import net.confirmo.appexample.model.PaginationData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class InvoiceController {
@@ -30,8 +33,17 @@ public class InvoiceController {
 
         LOGGER.info("Invoice created: {}", invoice.getInvoiceDetailResponse());
 
-        return "redirect:"+invoice.getInvoiceDetailResponse().getUrl();
+        return "redirect:" + invoice.getInvoiceDetailResponse().getUrl();
+    }
+
+    @GetMapping(value = "/invoices")
+    public String getInvoices(PaginationData paginationData, Model model) {
+        // TODO: validate data
+
+        List<Invoice> invoices = invoiceManager.getAll(paginationData);
+
+        model.addAttribute("invoices", invoices);
+        return "invoices";
     }
 
 }
-

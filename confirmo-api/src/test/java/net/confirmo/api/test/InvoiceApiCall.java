@@ -6,7 +6,6 @@ import net.confirmo.api.client.invoker.ApiException;
 import net.confirmo.api.model.CreateNewInvoiceRequest;
 import net.confirmo.api.model.Currency;
 import net.confirmo.api.tools.InvoiceRequestBuilder;
-import org.junit.Test;
 
 public class InvoiceApiCall {
 
@@ -19,7 +18,9 @@ public class InvoiceApiCall {
                 new InvoiceRequestBuilder().product("Test","Descr")
                 .invoice(Currency.CZK, 15.0f, Currency.BTC)
                 .settlement(Currency.CZK)
-                .reference("ref001", "https://127.0.0.1:8080/notify","https://127.0.0.1:8080/return").build();
+                .reference("ref001")
+                .callbacks("https://127.0.0.1:8080/notify","https://127.0.0.1:8080/return")
+                .build();
 
         try {
             invoiceApi.createNewInvoice(createNewInvoiceRequest);

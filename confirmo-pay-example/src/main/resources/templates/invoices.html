@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head"></head>
+    <body>
+        <nav th:replace="fragments/layout :: navigation"></nav>
+        <div class="container">
+            <h1>Invoices</h1>
+            <table class="table">
+                <thead class="thead-dark">
+                    <th>id</th>
+                    <th>status</th>
+                    <th>amount</th>
+                    <th>currency</th>
+                </thead>
+                <tbody>
+                    <tr th:each="invoice: ${invoices}">
+                        <td th:text="${invoice.invoiceEntity.id}" />
+                        <td th:text="${invoice.invoiceEntity.status}" />
+                        <td th:text="${invoice.invoiceEntity.amount}" />
+                        <td th:text="${invoice.invoiceEntity.currency}" />
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+    <footer th:replace="fragments/layout :: footer"></footer>
+</html>

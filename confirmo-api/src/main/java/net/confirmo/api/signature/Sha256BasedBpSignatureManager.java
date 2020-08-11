@@ -1,13 +1,10 @@
-package net.confirmo.spring.signature;
-
-import org.springframework.stereotype.Component;
+package net.confirmo.api.signature;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-@Component
-public class BpSignatureManagerImpl implements BpSignatureManager {
+public class Sha256BasedBpSignatureManager implements BpSignatureManager {
 
     /**
      * sha-256(content+password)
@@ -28,7 +25,7 @@ public class BpSignatureManagerImpl implements BpSignatureManager {
     }
 
     private String bytesToHex(byte[] hash) {
-        StringBuffer hexString = new StringBuffer();
+        StringBuilder hexString = new StringBuilder();
         for (int i = 0; i < hash.length; i++) {
             String hex = Integer.toHexString(0xff & hash[i]);
             if(hex.length() == 1) hexString.append('0');

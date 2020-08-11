@@ -95,7 +95,7 @@ paths:
         - in: path
           name: id
           description: ID of invoice
-          required: false
+          required: true
           schema:
             type: string
       responses:

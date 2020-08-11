@@ -1,4 +1,4 @@
-package net.confirmo.spring.signature;
+package net.confirmo.api.signature;
 
 public interface BpSignatureManager {
 
