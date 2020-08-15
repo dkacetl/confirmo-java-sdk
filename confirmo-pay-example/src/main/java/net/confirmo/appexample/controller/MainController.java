@@ -15,8 +15,7 @@ public class MainController {
 
     @GetMapping("/")
     public String showInvoiceForm(Model model) {
-        model.addAttribute("invoiceForm", new InvoiceForm());
-        return "invoiceForm";
+        return "forward:invoiceForm";
     }
 }
 

@@ -14,11 +14,11 @@ public interface InvoiceManager {
 
     Invoice createInvoice(String id, float amount, Currency targetCryptocurrency);
 
-    Invoice loadInvoice(String id) throws InvoiceNotFoundException;
+    Invoice fullLoadInvoice(String id) throws InvoiceNotFoundException;
 
     Invoice synchronize(Invoice invoice);
 
-    Invoice handleInvoiceCallback(String id, BitcoinPayStatus bitcoinPayStatus);
+    Invoice handleInvoice(String id);
 
     List<Invoice> getAll(PaginationData paginationData);
 

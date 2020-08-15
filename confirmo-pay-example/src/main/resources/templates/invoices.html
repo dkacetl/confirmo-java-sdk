@@ -14,7 +14,9 @@
                 </thead>
                 <tbody>
                     <tr th:each="invoice: ${invoices}">
-                        <td th:text="${invoice.invoiceEntity.id}" />
+                        <td>
+                            <a class="nav-link" th:href="@{/invoice/{id}(id=${invoice.invoiceEntity.id})}" th:text="${invoice.invoiceEntity.id}"></a>
+                        </td>
                         <td th:text="${invoice.invoiceEntity.status}" />
                         <td th:text="${invoice.invoiceEntity.amount}" />
                         <td th:text="${invoice.invoiceEntity.currency}" />

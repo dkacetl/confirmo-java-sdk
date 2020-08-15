@@ -1,5 +1,6 @@
 package net.confirmo.appexample.controller;
 
+import net.confirmo.api.query.BitcoinPayStatus;
 import net.confirmo.appexample.business.InvoiceManager;
 import net.confirmo.appexample.db.InvoiceRepository;
 import net.confirmo.appexample.form.InvoiceForm;
@@ -21,6 +22,12 @@ public class InvoiceController {
 
     @Autowired
     private InvoiceManager invoiceManager;
+
+    @GetMapping("/invoiceForm")
+    public String showInvoiceForm(Model model) {
+        model.addAttribute("invoiceForm", new InvoiceForm());
+        return "invoiceForm";
+    }
 
     @PostMapping(value = "/createInvoice")
     public String createInvoice(@ModelAttribute InvoiceForm invoiceForm, Model model) {
@@ -49,6 +56,34 @@ public class InvoiceController {
         model.addAttribute("invoices", invoices);
         model.addAttribute("count",invoiceRepository.count());
         return "invoices";
+    }
+
+    @GetMapping(value = "/invoice/{id}")
+    public String getInvoiceReceived(@PathVariable("id") String id,
+                                     Model model)  {
+
+        Invoice invoice = invoiceManager.handleInvoice(id);
+
+        model.addAttribute("id", id);
+        model.addAttribute("invoice",invoice);
+        model.addAttribute("status", invoice.getStatus());
+
+        return "invoiceDetail";
+    }
+
+    @GetMapping(value = "/invoiceReceived/{id}")
+    public String getInvoiceReceived(@PathVariable("id") String id,
+                                     @RequestParam("bitcoinpay-status") BitcoinPayStatus bitcoinpayStatus,
+                                     Model model)  {
+        LOGGER.info("invoiceReceived: {}, {}.",id, bitcoinpayStatus);
+
+        Invoice invoice = invoiceManager.handleInvoice(id);
+
+        model.addAttribute("id", id);
+        model.addAttribute("invoice",invoice);
+        model.addAttribute("status", invoice.getStatus());
+
+        return "invoiceDetail";
     }
 
 }

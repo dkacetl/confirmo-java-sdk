@@ -58,27 +58,13 @@ public class InvoiceManagerImpl implements InvoiceManager {
                 .collect(Collectors.toList());
     }
 
-    public Invoice handleInvoiceCallback(String id, BitcoinPayStatus bitcoinPayStatus) {
-
-        // todo: validate access to id
-        // get all data for invoice, also from confirmo API
-        // it is secure
-        Invoice invoice = loadInvoice(id);
-
-        if (invoice.getInvoiceDetailResponse()==null) {
-            throw new IllegalStateException("Invoice is not ready yet.");
-        }
-
-        return synchronize(invoice);
-    }
-
     /**
      * Full load invoice from db as well as from confirmo web.
      *
      * @param id id of invoice
      * @return invoice object
      */
-    public Invoice loadInvoice(String id) throws InvoiceNotFoundException {
+    public Invoice fullLoadInvoice(String id) throws InvoiceNotFoundException {
         // Load from db
         InvoiceEntity invoiceEntity = invoiceRepository
                 .findById(id).orElseThrow(() -> new InvoiceNotFoundException(id));
@@ -119,6 +105,7 @@ public class InvoiceManagerImpl implements InvoiceManager {
      * @param id
      * @return
      */
+    @Override
     public Invoice createInvoice(String id, float amount, Currency targetCryptocurrency) {
 
         InvoiceEntity invoiceEntity = createInvoiceEntity(id, amount, targetCryptocurrency);
@@ -136,6 +123,23 @@ public class InvoiceManagerImpl implements InvoiceManager {
         synchronize(invoice);
 
         return new Invoice(invoiceEntity, invoiceDetailResponse);
+    }
+
+    @Override
+    public Invoice handleInvoice(String id) {
+
+        // todo: validate access to id
+        // get all data for invoice, also from confirmo API
+        // it is secure
+        Invoice invoice = fullLoadInvoice(id);
+
+        if (invoice.getInvoiceDetailResponse()==null) {
+            throw new IllegalStateException("Invoice is not ready yet.");
+        }
+
+        invoice = synchronize(invoice);
+
+        return synchronize(invoice);
     }
 
     private InvoiceEntity createInvoiceEntity(String id, float amount, Currency currency) {

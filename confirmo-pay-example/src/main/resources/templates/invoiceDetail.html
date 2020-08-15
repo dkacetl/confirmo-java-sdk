@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head"/>
+    <body>
+        <nav th:replace="fragments/layout :: navigation"/>
+        <div class="container">
+            <h1>Invoice Detail</h1>
+            <div th:if="${invoice.status.name() == 'canceled'}" class="alert alert-secondary" role="alert">
+                Invoice has been canceled by user.
+            </div>
+            <div th:if="${invoice.status.name() == 'active'}" class="alert alert-secondary" role="alert">
+                Invoice is still active.
+            </div>
+            <div th:if="${invoice.status.name() == 'expired'}" class="alert alert-secondary" role="alert">
+                Invoice is expired.
+            </div>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>ID</td>
+                        <td th:text="${invoice.invoiceEntity.id}" />
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td th:text="${invoice.status}" />
+                    </tr>
+                    <tr>
+                        <td>cryptoUri</td>
+                        <td th:text="${invoice.invoiceDetailResponse.cryptoUri}" />
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+    <footer th:replace="fragments/layout :: footer"/>
+</html>

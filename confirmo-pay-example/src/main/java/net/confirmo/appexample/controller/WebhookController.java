@@ -60,37 +60,9 @@ public class WebhookController {
         InvoiceDetailResponse webhookRequest = parseWebhookRequest(requestEntity.getBody());
         LOGGER.warn("webhook : {}", webhookRequest.toString());
 
-        Invoice invoice = invoiceManager.loadInvoice(id);
+        Invoice invoice = invoiceManager.fullLoadInvoice(id);
 
         return new ResponseEntity<>("", HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/invoiceReceived/{id}")
-    public String getInvoiceReceived(@PathVariable("id") String id,
-                                     @RequestParam("bitcoinpay-status") BitcoinPayStatus bitcoinpayStatus,
-                                     Model model)  {
-        LOGGER.info("invoiceReceived: {}, {}.",id, bitcoinpayStatus);
-
-        Invoice invoice = invoiceManager.handleInvoiceCallback(id, bitcoinpayStatus);
-
-        model.addAttribute("id", id);
-        model.addAttribute("invoice",invoice);
-        model.addAttribute("status", invoice.getStatus());
-
-        switch (invoice.getStatus()) {
-            case active:
-            case expired:
-            case canceled: {
-                return "invoiceNotPaid";
-            }
-            case confirming:
-            case paid:
-            case confirmed: {
-                return "invoicePaid";
-            }
-        }
-
-        return "error";
     }
 
     /**
