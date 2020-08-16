@@ -3,7 +3,6 @@ package net.confirmo.appexample.business;
 import net.confirmo.api.model.CreateNewInvoiceRequest;
 import net.confirmo.api.model.Currency;
 import net.confirmo.api.model.InvoiceDetailResponse;
-import net.confirmo.api.query.BitcoinPayStatus;
 import net.confirmo.api.tools.InvoiceRequestBuilder;
 import net.confirmo.appexample.ConfirmoPayExampleProperties;
 import net.confirmo.appexample.db.InvoiceEntity;

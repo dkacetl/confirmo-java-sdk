@@ -30,28 +30,37 @@ public class ExampleApplication {
 }
 ```
 
-Use the api:
+Use the Confirmo API easy in your Spring Boot Controller:
 ```java
-CreateNewInvoiceRequest invoiceRequest = new CreateNewInvoiceRequest();
-Product product = new Product();
+@Controller
+public class MyInvoiceController {
 
-product.setName("Test");
-product.setDescription("Desc");
+    // helps to create invoice request by "builder" design pattern
+    @Autowired
+    private InvoiceRequestBuilderFactory invoiceRequestBuilderFactory;
+    
+    @Autowired
+    private InvoiceService invoiceService;
+    
+    @GetMapping("/createNewInvoice")
+    private String createNewInvoiceController() {
 
-Settlement settlement = new Settlement();
-settlement.setCurrency("CZK");
+        CreateNewInvoiceRequest request  = 
+                invoiceRequestBuilderFactory.create()
+                .product("Confirmo product","Please pay 1CZK for me in LTC.")
+                .invoiceAmount(1.0f).invoiceCurrency(Currency.CZK, Currency.LTC) 
+                .callbacks("https://public-url/webhook/",
+                           "https://return-to-merchant-url")
+                .build();
+        
+        // Note:
+        // https://public-url/webhook/ is accessible endpoint from internet for callback notifications
 
-Invoice invoice = new Invoice();
-invoice.setAmount(format.format(amount));
-invoice.setCurrencyFrom("CZK");
-invoice.setCurrencyTo("LTC");
+        InvoiceDetailResponse invoiceDetailResponse = invoiceService.create(request);
+        
+        // Go to confirmo.net gateway page with QR code for pay
+        return "redirect:" + invoiceDetailResponse.getUrl();
+    }
+}
 
-invoiceRequest.setProduct(product);
-invoiceRequest.setInvoice(invoice);
-invoiceRequest.setSettlement(settlement);
-invoiceRequest.setReference(reference);
-invoiceRequest.setNotifyUrl(confirmoPayExampleProperties.getNotifyUrl() + "/"+reference);
-invoiceRequest.setReturnUrl(confirmoPayExampleProperties.getReturnUrl() + "/"+reference);
-
-invoiceService.post(invoiceRequest);
 ```
