@@ -36,3 +36,4 @@ build/
 /config/
 /confirmo-db.mv.db
 /confirmo-db.trace.db
+/application.pid

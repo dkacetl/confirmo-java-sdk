@@ -50,7 +50,7 @@ public class WebhookController {
             value = "/invoiceNotification/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> invoiceNotification(@PathParam("id") String id, RequestEntity<String> requestEntity) {
+    public ResponseEntity<String> invoiceNotification(@PathVariable("id") String id, RequestEntity<String> requestEntity) {
         // validate if validator is present (webhook bp-signature validation)
         if (requestEntityValidator!=null) {
             requestEntityValidator.validate(requestEntity);
@@ -60,7 +60,7 @@ public class WebhookController {
         InvoiceDetailResponse webhookRequest = parseWebhookRequest(requestEntity.getBody());
         LOGGER.warn("webhook : {}", webhookRequest.toString());
 
-        Invoice invoice = invoiceManager.fullLoadInvoice(id);
+        invoiceManager.handleInvoice(id);
 
         return new ResponseEntity<>("", HttpStatus.OK);
     }
