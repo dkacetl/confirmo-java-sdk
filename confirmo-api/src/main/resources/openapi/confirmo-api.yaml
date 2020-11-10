@@ -81,6 +81,34 @@ paths:
         405:
           description: Validation exception
           content: {}
+  /settlemets:
+    post:
+      post:
+        summary: Create new invoice
+        operationId: create-new-invoice
+        requestBody:
+          description: Create new invoice
+          content:
+            application/json:
+              schema:
+                $ref: './schema/create-new-invoice-request.json'
+          required: true
+        responses:
+          200:
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: './schema/create-new-invoice-response.json'
+          400:
+            description: Invalid request
+            content: {}
+          404:
+            description: Invoice not found
+            content: {}
+          405:
+            description: Validation exception
+            content: {}
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
