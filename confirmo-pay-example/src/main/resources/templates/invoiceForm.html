@@ -3,10 +3,9 @@
     <head th:replace="fragments/layout :: head" />
     <body>
         <nav th:replace="fragments/layout :: navigation" />
-
         <div class="container">
             <h1>Create New Invoice</h1>
-            <form class="form-signin" action="#" th:action="@{createInvoice}" th:object="${invoiceForm}" method="post" >
+            <form id="create-new-invoice-form" class="form-signin" action="#" th:action="@{createInvoice}" th:object="${invoiceForm}" method="post" >
                 <div class="form-group">
                     <label for="number">Amount (CZK)</label>
                     <input id="number" class="form-control" size="100" data-decimals="3" min="0.50" step="0.50" type="number" th:field="*{amount}" />
@@ -20,11 +19,28 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <input class="btn btn-primary" type="submit" value="Submit" />
+                    <input type="hidden" id="recaptchaResponse" name="recaptchaResponse">
+                    <input class="btn btn-primary"
+                           type="submit"
+                           value="Submit" />
                     <input class="btn" type="reset" value="Reset" />
                 </div>
             </form>
         </div>
+
+        <script th:inline="javascript">
+            grecaptcha.ready(function () {
+               var siteKey = [[${@environment.getProperty('google.recaptcha.site-key')}]];
+               grecaptcha.execute(
+                    siteKey,
+                     { action: 'contact' }).then(function (token) {
+                            var recaptchaResponse = document.getElementById('recaptchaResponse');
+                            recaptchaResponse.value = token;
+                });
+            });
+        </script>
+
     </body>
+
     <footer th:replace="fragments/layout :: footer"/>
 </html>

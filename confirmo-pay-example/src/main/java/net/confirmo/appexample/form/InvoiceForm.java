@@ -7,6 +7,8 @@ public class InvoiceForm {
 
     private TargetCryptocurrencySelection targetCryptocurrencySelection;
 
+    private String recaptchaResponse;
+
     public float getAmount() {
         return amount;
     }
@@ -21,5 +23,13 @@ public class InvoiceForm {
 
     public void setTargetCryptocurrencySelection(TargetCryptocurrencySelection targetCryptocurrencySelection) {
         this.targetCryptocurrencySelection = targetCryptocurrencySelection;
+    }
+
+    public String getRecaptchaResponse() {
+        return recaptchaResponse;
+    }
+
+    public void setRecaptchaResponse(String recaptchaResponse) {
+        this.recaptchaResponse = recaptchaResponse;
     }
 }
