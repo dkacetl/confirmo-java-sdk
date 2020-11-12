@@ -1,10 +1,11 @@
 package net.confirmo.appexample.security;
 
 import net.confirmo.appexample.ConfirmoPayExampleProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,10 +18,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import javax.annotation.PostConstruct;
+
 @Configuration
 @EnableWebSecurity
 @ConditionalOnProperty(prefix = "confirmo-pay-example.web-security", value = "enabled", havingValue = "true", matchIfMissing = true)
 public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomWebSecurityConfigurerAdapter.class);
 
     @Autowired
     private ConfirmoPayExampleProperties confirmoPayExampleConfigProperties;
@@ -31,6 +36,8 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .authorizeRequests()
                     // UNAUTHENTICATED ENDPOINT - WEBHOOK from confirmo
                     .regexMatchers(HttpMethod.POST, "/invoiceNotification/[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}").permitAll().and()
+                .authorizeRequests()
+                    .regexMatchers(HttpMethod.GET, "/favicon/.png").permitAll().and()
                 .authorizeRequests().anyRequest().authenticated();
     }
 
@@ -50,5 +57,10 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @PostConstruct
+    private void init() {
+        LOGGER.info("Http security enabled.");
     }
 }

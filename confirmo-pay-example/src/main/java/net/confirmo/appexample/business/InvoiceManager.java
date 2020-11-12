@@ -1,7 +1,6 @@
 package net.confirmo.appexample.business;
 
 import net.confirmo.api.model.Currency;
-import net.confirmo.api.query.BitcoinPayStatus;
 import net.confirmo.appexample.model.Invoice;
 import net.confirmo.appexample.model.PaginationData;
 import net.confirmo.spring.invoice.InvoiceNotFoundException;

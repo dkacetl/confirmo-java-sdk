@@ -1,7 +1,6 @@
 package net.confirmo.appexample.db;
 
 import net.confirmo.api.model.Currency;
-import net.confirmo.api.query.BitcoinPayStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

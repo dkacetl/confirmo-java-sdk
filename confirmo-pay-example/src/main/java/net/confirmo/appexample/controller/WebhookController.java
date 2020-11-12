@@ -3,9 +3,7 @@ package net.confirmo.appexample.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.confirmo.api.model.InvoiceDetailResponse;
-import net.confirmo.api.query.BitcoinPayStatus;
 import net.confirmo.appexample.business.InvoiceManager;
-import net.confirmo.appexample.model.Invoice;
 import net.confirmo.spring.signature.RequestEntityValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,15 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.PostConstruct;
-import javax.websocket.server.PathParam;
 
 @Controller
 public class WebhookController {
